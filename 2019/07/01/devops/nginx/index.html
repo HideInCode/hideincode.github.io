@@ -21,17 +21,17 @@
   <meta name="description" content="安装部署docker下安装 docker pull nginx   docker run –name nginx -p 9000:80 -d nginx 先启动一个容器用来复制配置  生成挂载文件地址 1234567mkdir -p &#x2F;opt&#x2F;docker&#x2F;nginx&#x2F;confmkdir -p &#x2F;opt&#x2F;docker&#x2F;nginx&#x2F;htmlmkdir -p &#x2F;opt&#x2F;docker&#x2F;nginx&#x2F;log">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Nginx相关">
-<meta property="og:url" content="https://hideincode.github.io/2019/07/01/devops/ngxin/index.html">
+<meta property="og:url" content="https://hideincode.github.io/2019/07/01/devops/nginx/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="安装部署docker下安装 docker pull nginx   docker run –name nginx -p 9000:80 -d nginx 先启动一个容器用来复制配置  生成挂载文件地址 1234567mkdir -p &#x2F;opt&#x2F;docker&#x2F;nginx&#x2F;confmkdir -p &#x2F;opt&#x2F;docker&#x2F;nginx&#x2F;htmlmkdir -p &#x2F;opt&#x2F;docker&#x2F;nginx&#x2F;log">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-06-30T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-05-07T08:51:44.755Z">
+<meta property="article:modified_time" content="2026-05-24T15:40:19.666Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="devops">
 <meta name="twitter:card" content="summary">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://hideincode.github.io/2019/07/01/devops/ngxin/index.html">
+  <link rel="canonical" href="https://hideincode.github.io/2019/07/01/devops/nginx/index.html">
   
   
     <link rel="icon" href="/favicon.png" type="image/x-icon">
@@ -302,7 +302,7 @@
                 <a class="category-link" href="/categories/%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A7/">解题技巧</a>
               </p>
               <p class="item-title">
-                <a href="/2022/08/08/algo/%E6%A8%A1%E6%9D%BF/" class="title">模板</a>
+                <a href="/2022/08/08/algo/AC1337/" class="title">AC1337</a>
               </p>
               <p class="item-date">
                 <time datetime="2022-08-07T16:00:00.000Z" itemprop="datePublished">2022-08-08</time>
@@ -323,7 +323,7 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="post-devops/ngxin" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-devops/nginx" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
@@ -338,7 +338,7 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2019/07/01/devops/ngxin/" class="article-date">
+	<a href="/2019/07/01/devops/nginx/" class="article-date">
 	  <time datetime="2019-06-30T16:00:00.000Z" itemprop="datePublished">2019-07-01</time>
 	</a>
 </span>
@@ -364,7 +364,7 @@
 	</span>
 
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/07/01/devops/ngxin/#comments" class="article-comment-link">Comments</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/07/01/devops/nginx/#comments" class="article-comment-link">Comments</a></span>
         
       </div>
     </div>
@@ -392,23 +392,46 @@
 <h3 id="转发不到"><a href="#转发不到" class="headerlink" title="转发不到"></a>转发不到</h3><ol>
 <li>查看error.log，请求路径是否符合预期。</li>
 </ol>
-<h2 id="斜杠问题"><a href="#斜杠问题" class="headerlink" title="斜杠问题"></a>斜杠问题</h2><blockquote>
-<p>配置为：</p>
-<p>location hello&#x2F; {</p>
-<p> <strong>proxy_pass</strong> 192.168.56.10&#x2F;</p>
-<p>}</p>
-<p>请求：nginx主机&#x2F;hello&#x2F;all</p>
-</blockquote>
-<ol>
-<li>location：不带&#x2F;的话会自动补上，带的话能正确拼接。</li>
-<li>proxy_pass：<ol>
-<li>带&#x2F;：;最终请求：nginx主机&#x2F;all，即忽略location.</li>
-<li>不带&#x2F;：最终请求：nginx主机&#x2F;hello&#x2F;all</li>
-</ol>
-</li>
-<li>location不带，proxy_pass带：会生成双斜杠，nginx主机&#x2F;&#x2F;all，这是因为补齐机制导致。</li>
-<li>总结：proxy_pass看项目的controller有没有带，location最好带上。</li>
-</ol>
+<h2 id="斜杠问题"><a href="#斜杠问题" class="headerlink" title="斜杠问题"></a>斜杠问题</h2><p><strong>请求为</strong>：test&#x2F;a&#x2F;b</p>
+<p><strong>配置为</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location <span class="built_in">test</span>/ &#123;</span><br><span class="line">	proxy_pass http://localhost:8080</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>location:test&#x2F;</th>
+<th>location:test</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>proxy_pass:<a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080</a></td>
+<td><a target="_blank" rel="noopener" href="http://localhost:8080/test/a/b">http://localhost:8080/test/a/b</a></td>
+<td><a target="_blank" rel="noopener" href="http://localhost:8080/test/a/b">http://localhost:8080/test/a/b</a></td>
+</tr>
+<tr>
+<td>proxy_pass:<a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080/</a></td>
+<td><a target="_blank" rel="noopener" href="http://localhost:8080/a/b">http://localhost:8080/a/b</a></td>
+<td><a target="_blank" rel="noopener" href="http://localhost:8080//a/b">http://localhost:8080//a/b</a></td>
+</tr>
+<tr>
+<td>proxy_pass:<a target="_blank" rel="noopener" href="http://localhost:8080/a">http://localhost:8080/a</a></td>
+<td><a target="_blank" rel="noopener" href="http://localhost:8080/testa/b">http://localhost:8080/testa/b</a></td>
+<td><a target="_blank" rel="noopener" href="http://localhost:8080/test/a/b">http://localhost:8080/test/a/b</a></td>
+</tr>
+<tr>
+<td>proxy_pass:<a target="_blank" rel="noopener" href="http://localhost:8080/a/">http://localhost:8080/a/</a></td>
+<td><a target="_blank" rel="noopener" href="http://localhost:8080/test/a/b">http://localhost:8080/test/a/b</a></td>
+<td><a target="_blank" rel="noopener" href="http://localhost:8080/test/a/b">http://localhost:8080/test/a/b</a></td>
+</tr>
+</tbody></table>
+<p><strong>结论</strong></p>
+<ul>
+<li>proxy_pass代理地址端口后无任何字符，转发后地址：代理地址+访问URL目录部分</li>
+<li>proxy_pass代理地址端口后有目录(包括 &#x2F; )，转发后地址：代理地址+访问URL目录部分去除location匹配目录（示例中的”v1”或”v1&#x2F;“）</li>
+</ul>
 
       
     </div>
@@ -418,7 +441,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://hideincode.github.io/2019/07/01/devops/ngxin/" title="Nginx相关" target="_blank" rel="external">https://hideincode.github.io/2019/07/01/devops/ngxin/</a>
+      <a href="https://hideincode.github.io/2019/07/01/devops/nginx/" title="Nginx相关" target="_blank" rel="external">https://hideincode.github.io/2019/07/01/devops/nginx/</a>
     </li>
     
     <li class="post-copyright-license">
