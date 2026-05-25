@@ -59,19 +59,26 @@ tags:
 
 ## 斜杠问题
 
-> 配置为：
->
-> location hello/ {
->
->  **proxy_pass** 192.168.56.10/
->
-> }
->
-> 请求：nginx主机/hello/all
+**请求为**：test/a/b
 
-1. location：不带/的话会自动补上，带的话能正确拼接。
-2. proxy_pass：
-   1. 带/：;最终请求：nginx主机/all，即忽略location.
-   2. 不带/：最终请求：nginx主机/hello/all
-3. location不带，proxy_pass带：会生成双斜杠，nginx主机//all，这是因为补齐机制导致。
-4. 总结：proxy_pass看项目的controller有没有带，location最好带上。
+**配置为**：
+
+```bash
+location test/ {
+	proxy_pass http://localhost:8080
+}
+```
+
+
+
+|                                     | location:test/                 | location:test                  |
+| ----------------------------------- | ------------------------------ | ------------------------------ |
+| proxy_pass:http://localhost:8080    | http://localhost:8080/test/a/b | http://localhost:8080/test/a/b |
+| proxy_pass:http://localhost:8080/   | http://localhost:8080/a/b      | http://localhost:8080//a/b     |
+| proxy_pass:http://localhost:8080/a  | http://localhost:8080/testa/b  | http://localhost:8080/test/a/b |
+| proxy_pass:http://localhost:8080/a/ | http://localhost:8080/test/a/b | http://localhost:8080/test/a/b |
+
+**结论**
+
+- proxy_pass代理地址端口后无任何字符，转发后地址：代理地址+访问URL目录部分
+- proxy_pass代理地址端口后有目录(包括 / )，转发后地址：代理地址+访问URL目录部分去除location匹配目录（示例中的"v1"或"v1/"）
