@@ -22,12 +22,11 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis">
 <meta property="og:url" content="https://hideincode.github.io/2021/04/08/system/Redis/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name">
 <meta property="og:description" content="Redis数据类型 Strings  Hash  Lists  粉丝列表,文章评论;基于缓存分页lrange   Sets  求交并补   Sorted Sets   缓存与数据库数据一致性问题 CAP 读的时候先读缓存,写时先写库.   问题:如果删除缓存失败,那么就会读到旧数据.  解决方案:  先删除缓存在更新库. 延时双删,利用队列 DelayQueue MQ   高并发情况下的问题：">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-04-07T16:00:00.000Z">
 <meta property="article:modified_time" content="2024-05-07T08:56:55.119Z">
-<meta property="article:author" content="John Doe">
 <meta property="article:tag" content="system design">
 <meta name="twitter:card" content="summary">
   <!-- Canonical links -->
@@ -45,7 +44,7 @@
   
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.css">
   
-<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
 </head>
 
 
@@ -97,7 +96,7 @@
       </button>
     </div>
     <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
-      <ul class="nav navbar-nav main-nav ">
+      <ul class="nav navbar-nav main-nav menu-highlight">
         
         
         <li class="menu-item menu-item-home">
@@ -302,7 +301,7 @@
                 <a class="category-link" href="/categories/%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A7/">解题技巧</a>
               </p>
               <p class="item-title">
-                <a href="/2022/08/08/algo/%E6%A8%A1%E6%9D%BF/" class="title">模板</a>
+                <a href="/2022/08/08/algo/AC1337/" class="title">AC1337</a>
               </p>
               <p class="item-date">
                 <time datetime="2022-08-07T16:00:00.000Z" itemprop="datePublished">2022-08-08</time>
@@ -706,7 +705,7 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
   <script type="text/javascript">
   var gitalk = new Gitalk({
     clientID: 'Ov23livjuFqQWx8aX0PX',
-    clientSecret: '54ae38e20c2b091846eb01b4117043c9acf14d02',
+    clientSecret: 'e5e9a0c7d063781f24450bf3b143293dc613001d',
     repo: 'gitalk-comments',
     owner: 'HideInCode',
     admin: ['HideInCode'],
