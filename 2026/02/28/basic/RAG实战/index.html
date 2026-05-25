@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>RAG 实战：LangChain / Spring AI + Elasticsearch 构建私有知识库问答系统 | HideInCode</title>
+  <meta name="description" content="去年给公司内部做了一套私有知识库问答系统，把 Elasticsearch 当检索底座，分别用 LangChain 和 Spring AI 各实现了一版。两个方案踩了一些坑，但也跑通了从文档上传到对话回复的完整链路。这篇文章就按项目推进的顺序，把流程、关键决策和常见的坑整理出来，供参考。  一、RAG 解决的到底是什么问题大模型有两个明显的短板：训练数据有截止日期，遇到公司内部的专业内容容易编造事实">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RAG 实战：LangChain &#x2F; Spring AI + Elasticsearch 构建私有知识库问答系统">
+<meta property="og:url" content="https://hideincode.github.io/2026/02/28/basic/RAG%E5%AE%9E%E6%88%98/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="去年给公司内部做了一套私有知识库问答系统，把 Elasticsearch 当检索底座，分别用 LangChain 和 Spring AI 各实现了一版。两个方案踩了一些坑，但也跑通了从文档上传到对话回复的完整链路。这篇文章就按项目推进的顺序，把流程、关键决策和常见的坑整理出来，供参考。  一、RAG 解决的到底是什么问题大模型有两个明显的短板：训练数据有截止日期，遇到公司内部的专业内容容易编造事实">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-02-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-05-25T17:21:37.496Z">
+<meta property="article:tag" content="RAG">
+<meta property="article:tag" content="Elasticsearch">
+<meta property="article:tag" content="LangChain">
+<meta property="article:tag" content="Spring AI">
+<meta property="article:tag" content="向量检索">
+<meta property="article:tag" content="知识库">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://hideincode.github.io/2026/02/28/basic/RAG%E5%AE%9E%E6%88%98/index.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.css">
+  
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/HideInCode" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">HideInCode</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">服务端工程师</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 深圳</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/HideInCode" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>个人知识归纳，转载注明出处。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/devops/">devops</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E9%83%A8%E7%BD%B2/">开发部署</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">系统设计</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A7/">解题技巧</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/">问题排查</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/" rel="tag">AI</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/" rel="tag">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LangChain/" rel="tag">LangChain</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS/" rel="tag">OS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RAG/" rel="tag">RAG</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-AI/" rel="tag">Spring AI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algo/" rel="tag">algo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code/" rel="tag">code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/concurrent/" rel="tag">concurrent</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/" rel="tag">design pattern</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devops/" rel="tag">devops</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/" rel="tag">error</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/safe/" rel="tag">safe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/" rel="tag">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/system-design/" rel="tag">system design</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/threads/" rel="tag">threads</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%91%E9%87%8F%E6%A3%80%E7%B4%A2/" rel="tag">向量检索</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/" rel="tag">知识库</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/AI/" style="font-size: 13.33px;">AI</a> <a href="/tags/Elasticsearch/" style="font-size: 13px;">Elasticsearch</a> <a href="/tags/JVM/" style="font-size: 13px;">JVM</a> <a href="/tags/LangChain/" style="font-size: 13px;">LangChain</a> <a href="/tags/OS/" style="font-size: 13px;">OS</a> <a href="/tags/RAG/" style="font-size: 13px;">RAG</a> <a href="/tags/Spring-AI/" style="font-size: 13px;">Spring AI</a> <a href="/tags/algo/" style="font-size: 13.33px;">algo</a> <a href="/tags/code/" style="font-size: 13.33px;">code</a> <a href="/tags/concurrent/" style="font-size: 13px;">concurrent</a> <a href="/tags/design-pattern/" style="font-size: 13px;">design pattern</a> <a href="/tags/devops/" style="font-size: 14px;">devops</a> <a href="/tags/error/" style="font-size: 13.33px;">error</a> <a href="/tags/safe/" style="font-size: 13px;">safe</a> <a href="/tags/socket/" style="font-size: 13px;">socket</a> <a href="/tags/system-design/" style="font-size: 13.67px;">system design</a> <a href="/tags/threads/" style="font-size: 13px;">threads</a> <a href="/tags/%E5%90%91%E9%87%8F%E6%A3%80%E7%B4%A2/" style="font-size: 13px;">向量检索</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/" style="font-size: 13px;">知识库</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/02/">二月 2026</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/10/">十月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">八月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/06/">六月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a>
+              </p>
+              <p class="item-title">
+                <a href="/2026/02/28/basic/RAG%E5%AE%9E%E6%88%98/" class="title">RAG 实战：LangChain / Spring AI + Elasticsearch 构建私有知识库问答系统</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2026-02-27T16:00:00.000Z" itemprop="datePublished">2026-02-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a>
+              </p>
+              <p class="item-title">
+                <a href="/2025/10/27/basic/numpy/" class="title">NumPy 快速入门与核心知识总结</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2025-10-27T14:00:00.000Z" itemprop="datePublished">2025-10-27</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/devops/">devops</a>
+              </p>
+              <p class="item-title">
+                <a href="/2025/08/28/error/%E4%B8%80%E6%AC%A1Full%20GC/" class="title">一次 Full GC 频繁的排查过程</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2025-08-27T16:00:00.000Z" itemprop="datePublished">2025-08-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a>
+              </p>
+              <p class="item-title">
+                <a href="/2025/06/15/basic/LLM/" class="title">LLM</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2025-06-14T16:00:00.000Z" itemprop="datePublished">2025-06-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a>
+              </p>
+              <p class="item-title">
+                <a href="/2024/05/01/basic/%E5%B8%B8%E8%A7%81%E6%94%BB%E5%87%BB%E4%B8%8E%E6%BC%8F%E6%B4%9E/" class="title">常见攻击与漏洞</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-04-30T16:00:00.000Z" itemprop="datePublished">2024-05-01</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-basic/RAG实战" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      RAG 实战：LangChain / Spring AI + Elasticsearch 构建私有知识库问答系统
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2026/02/28/basic/RAG%E5%AE%9E%E6%88%98/" class="article-date">
+	  <time datetime="2026-02-27T16:00:00.000Z" itemprop="datePublished">2026-02-28</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a>, <a class="article-tag-link-link" href="/tags/LangChain/" rel="tag">LangChain</a>, <a class="article-tag-link-link" href="/tags/RAG/" rel="tag">RAG</a>, <a class="article-tag-link-link" href="/tags/Spring-AI/" rel="tag">Spring AI</a>, <a class="article-tag-link-link" href="/tags/%E5%90%91%E9%87%8F%E6%A3%80%E7%B4%A2/" rel="tag">向量检索</a>, <a class="article-tag-link-link" href="/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/" rel="tag">知识库</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2026/02/28/basic/RAG%E5%AE%9E%E6%88%98/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>去年给公司内部做了一套私有知识库问答系统，把 Elasticsearch 当检索底座，分别用 LangChain 和 Spring AI 各实现了一版。两个方案踩了一些坑，但也跑通了从文档上传到对话回复的完整链路。这篇文章就按项目推进的顺序，把流程、关键决策和常见的坑整理出来，供参考。</p>
+<hr>
+<h2 id="一、RAG-解决的到底是什么问题"><a href="#一、RAG-解决的到底是什么问题" class="headerlink" title="一、RAG 解决的到底是什么问题"></a>一、RAG 解决的到底是什么问题</h2><p>大模型有两个明显的短板：训练数据有截止日期，遇到公司内部的专业内容容易编造事实。每次看到它信誓旦旦地给出错误答案，就知道不能只用模型本身，得给它配一本能实时查阅的“参考书”。</p>
+<p>RAG 就是这本书的实现方式：先把私有文档向量化存起来，用户提问时检索最相关的内容，再把内容连同问题一起塞进 Prompt，让模型基于这些材料回答。整个体系分成两个阶段：</p>
+<ul>
+<li><strong>离线阶段</strong>：把 PDF、Word、Markdown、数据库记录等文档解析成纯文本，再按固定长度切片，通过 Embedding 模型转成向量，存入 Elasticsearch。</li>
+<li><strong>在线阶段</strong>：用户提问同样先转成向量，去 ES 里用 KNN 检索出最相似的 K 个片段，拼接到 Prompt 中，让 LLM 生成最终答案。</li>
+</ul>
+<hr>
+<h2 id="二、文档切分的坑比想象得多"><a href="#二、文档切分的坑比想象得多" class="headerlink" title="二、文档切分的坑比想象得多"></a>二、文档切分的坑比想象得多</h2><p>把文档转成文本很简单，Apache Tika 或者 Python 的 <code>pdfplumber</code>、<code>python-docx</code> 随便一个库就能搞定。但到了分块（chunking）这一步，问题就来了。</p>
+<p>最初直接用 LangChain 的 <code>RecursiveCharacterTextSplitter</code>，按 512 个字符切，结果切出来的片段经常一句话被拦腰截断，上下文支离破碎。后来改成了按“段落 + 重叠”的方式：先按自然段落切分，段落太长的再切，最后每个 chunk 都带上前后各 50 个 token 的重叠，效果好了很多。</p>
+<p>还有一些特殊文档，比如技术手册里代码块和表格非常多，按行切容易把这些东西打散。最后给这类文档写了专门的解析器，代码块保持完整，表格转成 Markdown 格式再切片。</p>
+<p>分块大小没有银弹。经验是：对于普通技术文档，512 token 左右够用；对于法律合同这种长句密集的，可以放大到 1024 token。但越大越容易混入无关信息，检索准确度会下降。</p>
+<hr>
+<h2 id="三、向量化和检索：从“能用”到“好用”的调整"><a href="#三、向量化和检索：从“能用”到“好用”的调整" class="headerlink" title="三、向量化和检索：从“能用”到“好用”的调整"></a>三、向量化和检索：从“能用”到“好用”的调整</h2><p>Embedding 模型选的是 <code>text-embedding-3-small</code>（用在线 API）和 <code>bge-large-zh-v1.5</code>（本地部署），维度都是 768。ES 里建索引的 mapping 大概是：</p>
+<pre><code>PUT /knowledge_base
+&#123;
+  &quot;mappings&quot;: &#123;
+    &quot;properties&quot;: &#123;
+      &quot;content&quot;: &#123; &quot;type&quot;: &quot;text&quot;, &quot;analyzer&quot;: &quot;ik_max_word&quot; &#125;,
+      &quot;content_vector&quot;: &#123;
+        &quot;type&quot;: &quot;dense_vector&quot;,
+        &quot;dims&quot;: 768,
+        &quot;index&quot;: true,
+        &quot;similarity&quot;: &quot;cosine&quot;
+      &#125;,
+      &quot;title&quot;: &#123; &quot;type&quot;: &quot;text&quot; &#125;,
+      &quot;category&quot;: &#123; &quot;type&quot;: &quot;keyword&quot; &#125;,
+      &quot;source_file&quot;: &#123; &quot;type&quot;: &quot;keyword&quot; &#125;
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+<p>写入时通过 <code>_bulk</code> 批量灌，单个文档带上 <code>content_vector</code> 字段。ES 8 以后 HNSW 的索引速度和召回率都挺好，没必要自己再套一层 FAISS。</p>
+<p>检索阶段一开始只用了纯向量 KNN：</p>
+<pre><code>GET /knowledge_base/_search
+&#123;
+  &quot;knn&quot;: &#123;
+    &quot;field&quot;: &quot;content_vector&quot;,
+    &quot;query_vector&quot;: [ ... ],
+    &quot;k&quot;: 5,
+    &quot;num_candidates&quot;: 20
+  &#125;
+&#125;
+</code></pre>
+<p>但业务方反馈“有时候关键词特别明确的查询，答案反而不准”。一看日志，全是“合同编号 xxx 的金额是多少”这种问题，KNN 检索可能因为语义相似度把其他合同的金额也拉进来了。</p>
+<p>解决方法是在 ES 里加上混合检索：先用 <code>multi_match</code> 在 <code>title</code> 和 <code>content</code> 上做关键词匹配，再用 KNN 向量检索，把两个结果集用倒数排名融合（Reciprocal Rank Fusion, RRF）合并后取 Top-K。调整后准确率提升明显。虽然多了一步，但查询延迟在几十毫秒以内，完全能接受。</p>
+<hr>
+<h2 id="四、两个版本：LangChain-和-Spring-AI-分别怎么搭"><a href="#四、两个版本：LangChain-和-Spring-AI-分别怎么搭" class="headerlink" title="四、两个版本：LangChain 和 Spring AI 分别怎么搭"></a>四、两个版本：LangChain 和 Spring AI 分别怎么搭</h2><p>Python 版用的是 LangChain，整体链式调用很顺。从 ES 检索回来，把文档内容拼成 Prompt 模板：</p>
+<pre><code>from langchain.prompts import ChatPromptTemplate
+prompt = ChatPromptTemplate.from_messages([
+    (&quot;system&quot;, &quot;你是一个公司内部知识库助手，请根据以下资料回答问题。如果资料中找不到答案，请说不知道。&quot;),
+    (&quot;user&quot;, &quot;资料：\n&#123;context&#125;\n\n问题：&#123;question&#125;&quot;)
+])
+</code></pre>
+<p>然后调用 LLM，配合 <code>StrOutputParser</code> 输出。LangChain 的好处是生态齐全，文档加载器、文本分割器、Retriever 接口一应俱全，快速出原型很快。</p>
+<p>但公司后端技术栈是 Java，部署 Python 服务增加了运维成本。于是又用 Spring AI 搞了一版。核心用的是 <code>ElasticsearchVectorStore</code> 和 <code>OpenAiChatModel</code>：</p>
+<pre><code>@Bean
+public VectorStore vectorStore(ElasticsearchClient esClient, EmbeddingModel embedding) &#123;
+    return new ElasticsearchVectorStore(
+        new ElasticsearchVectorStoreOptions(&quot;knowledge_base&quot;),
+        esClient,
+        embedding
+    );
+&#125;
+
+@Bean
+public OpenAiChatModel chatModel() &#123;
+    return OpenAiChatModel.builder()
+        .apiKey(System.getenv(&quot;OPENAI_API_KEY&quot;))
+        .model(&quot;gpt-4o-mini&quot;)
+        .build();
+&#125;
+</code></pre>
+<p>查询时直接用 <code>VectorStore.similaritySearch(query, 5)</code>，然后把结果传给 ChatModel。Spring AI 目前还在快速迭代，很多接口不稳定，之前版本升级就遇到 <code>ElasticsearchVectorStore</code> 构造函数变更，改了不少代码。但好处是可以无缝集成 Spring Boot 生态，和现有的权限、日志、监控对接很方便。</p>
+<p>两个版本比较：</p>
+<ul>
+<li>快速验证、数据科学家做实验，用 LangChain。</li>
+<li>生产环境且技术栈是 Java，用 Spring AI 更省心，虽然版本还不算稳定，但架构一致。</li>
+</ul>
+<hr>
+<h2 id="五、效果和没解决的尾巴"><a href="#五、效果和没解决的尾巴" class="headerlink" title="五、效果和没解决的尾巴"></a>五、效果和没解决的尾巴</h2><p>上线的知识库覆盖了公司两个部门的技术文档和规章制度，问答准确率在 85% 左右。几个明显的问题还在解决：</p>
+<ul>
+<li>用户问“怎么 A”时，如果文档里同时有“A 的介绍”和“A 的配置说明”，检索可能混进不相关的内容。后续打算加 metadata 过滤，让用户在提问时先选分类。</li>
+<li>多轮对话现在每轮都独立检索，没有利用历史信息。下一步要加入查询重写（query rewriting），把对话上下文融入检索。</li>
+<li>有些带表格的问题，模型直接引用表格文本会丢失结构，打算在分块阶段对表格做结构化提取，生成描述性文本。</li>
+</ul>
+<p>整体来看，RAG 落地并不神秘，关键在于把每个环节的细节调好：分块策略、检索方式、Prompt 设计，各个点上差一点，最终效果就差很多。希望这些经验对正在做的开发者有所帮助。</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://hideincode.github.io/2026/02/28/basic/RAG%E5%AE%9E%E6%88%98/" title="RAG 实战：LangChain / Spring AI + Elasticsearch 构建私有知识库问答系统" target="_blank" rel="external">https://hideincode.github.io/2026/02/28/basic/RAG实战/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/HideInCode" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/HideInCode" target="_blank"><span class="text-dark">HideInCode</span><small class="ml-1x">服务端工程师</small></a></h3>
+        <div>后端玩家</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2025/10/27/basic/numpy/" title="NumPy 快速入门与核心知识总结"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/HideInCode" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	<!-- Theme by <a href="https://github.com/" target="_blank">  </a>base on <a href="https://github.com/" target="_blank">pure</a>. -->
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <script src="//cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'Ov23livjuFqQWx8aX0PX',
+    clientSecret: 'e5e9a0c7d063781f24450bf3b143293dc613001d',
+    repo: 'gitalk-comments',
+    owner: 'HideInCode',
+    admin: ['HideInCode'],
+    id: md5(location.pathname),
+    distractionFreeMode: true,
+    language: 'zh-CN',
+    enableHotKey: 'true'
+  })
+  gitalk.render('comments')
+  </script>
+      
+
+
+
+
+
+
+
+</body>
+</html>

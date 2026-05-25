@@ -18,15 +18,15 @@
   
   
   <title>K8S集群搭建 | HideInCode</title>
-  <meta name="description" content="K8S集群搭建">
+  <meta name="description" content="K8S集群搭建对中小团队或个人开发者而言，使用 kubectl 命令行管理 K8s 集群，宛如“驾驶一辆没有仪表盘的汽车——你能开动它，却难以感知状态，更无法精细操控”。这时，一款轻量、易用的可视化管理面板能极大降低运维门槛。Kuboard 正是为此而生。 本文将带你走完一条完整的实践链路：从使用 kubeadm 搭建 Kubernetes 集群、配置容器运行时与网络插件，到部署 Kuboard">
 <meta property="og:type" content="article">
 <meta property="og:title" content="K8S集群搭建">
 <meta property="og:url" content="https://hideincode.github.io/2023/11/11/devops/k8s/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="K8S集群搭建">
+<meta property="og:description" content="K8S集群搭建对中小团队或个人开发者而言，使用 kubectl 命令行管理 K8s 集群，宛如“驾驶一辆没有仪表盘的汽车——你能开动它，却难以感知状态，更无法精细操控”。这时，一款轻量、易用的可视化管理面板能极大降低运维门槛。Kuboard 正是为此而生。 本文将带你走完一条完整的实践链路：从使用 kubeadm 搭建 Kubernetes 集群、配置容器运行时与网络插件，到部署 Kuboard">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-11-10T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-05-07T09:04:03.886Z">
+<meta property="article:modified_time" content="2026-05-25T16:58:14.838Z">
 <meta property="article:tag" content="devops">
 <meta name="twitter:card" content="summary">
   <!-- Canonical links -->
@@ -183,7 +183,7 @@
   <div class="widget">
     <h3 class="widget-title">分类</h3>
     <div class="widget-body">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E9%83%A8%E7%BD%B2/">开发部署</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">系统设计</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A7/">解题技巧</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/">问题排查</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/devops/">devops</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E9%83%A8%E7%BD%B2/">开发部署</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">系统设计</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A7/">解题技巧</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/">问题排查</a><span class="category-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -193,7 +193,7 @@
   <div class="widget">
     <h3 class="widget-title">标签</h3>
     <div class="widget-body">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/" rel="tag">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS/" rel="tag">OS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algo/" rel="tag">algo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code/" rel="tag">code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/concurrent/" rel="tag">concurrent</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/" rel="tag">design pattern</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devops/" rel="tag">devops</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/" rel="tag">error</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/safe/" rel="tag">safe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/" rel="tag">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/system-design/" rel="tag">system design</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/threads/" rel="tag">threads</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/" rel="tag">AI</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/" rel="tag">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LangChain/" rel="tag">LangChain</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS/" rel="tag">OS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RAG/" rel="tag">RAG</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-AI/" rel="tag">Spring AI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algo/" rel="tag">algo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code/" rel="tag">code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/concurrent/" rel="tag">concurrent</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/" rel="tag">design pattern</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devops/" rel="tag">devops</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/" rel="tag">error</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/safe/" rel="tag">safe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/" rel="tag">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/system-design/" rel="tag">system design</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/threads/" rel="tag">threads</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%91%E9%87%8F%E6%A3%80%E7%B4%A2/" rel="tag">向量检索</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/" rel="tag">知识库</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -203,7 +203,7 @@
   <div class="widget">
     <h3 class="widget-title">标签云</h3>
     <div class="widget-body tagcloud">
-      <a href="/tags/JVM/" style="font-size: 13px;">JVM</a> <a href="/tags/OS/" style="font-size: 13px;">OS</a> <a href="/tags/algo/" style="font-size: 13.33px;">algo</a> <a href="/tags/code/" style="font-size: 13.33px;">code</a> <a href="/tags/concurrent/" style="font-size: 13px;">concurrent</a> <a href="/tags/design-pattern/" style="font-size: 13px;">design pattern</a> <a href="/tags/devops/" style="font-size: 14px;">devops</a> <a href="/tags/error/" style="font-size: 13px;">error</a> <a href="/tags/safe/" style="font-size: 13px;">safe</a> <a href="/tags/socket/" style="font-size: 13px;">socket</a> <a href="/tags/system-design/" style="font-size: 13.67px;">system design</a> <a href="/tags/threads/" style="font-size: 13px;">threads</a>
+      <a href="/tags/AI/" style="font-size: 13.33px;">AI</a> <a href="/tags/Elasticsearch/" style="font-size: 13px;">Elasticsearch</a> <a href="/tags/JVM/" style="font-size: 13px;">JVM</a> <a href="/tags/LangChain/" style="font-size: 13px;">LangChain</a> <a href="/tags/OS/" style="font-size: 13px;">OS</a> <a href="/tags/RAG/" style="font-size: 13px;">RAG</a> <a href="/tags/Spring-AI/" style="font-size: 13px;">Spring AI</a> <a href="/tags/algo/" style="font-size: 13.33px;">algo</a> <a href="/tags/code/" style="font-size: 13.33px;">code</a> <a href="/tags/concurrent/" style="font-size: 13px;">concurrent</a> <a href="/tags/design-pattern/" style="font-size: 13px;">design pattern</a> <a href="/tags/devops/" style="font-size: 14px;">devops</a> <a href="/tags/error/" style="font-size: 13.33px;">error</a> <a href="/tags/safe/" style="font-size: 13px;">safe</a> <a href="/tags/socket/" style="font-size: 13px;">socket</a> <a href="/tags/system-design/" style="font-size: 13.67px;">system design</a> <a href="/tags/threads/" style="font-size: 13px;">threads</a> <a href="/tags/%E5%90%91%E9%87%8F%E6%A3%80%E7%B4%A2/" style="font-size: 13px;">向量检索</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/" style="font-size: 13px;">知识库</a>
     </div>
   </div>
 
@@ -212,7 +212,7 @@
   <div class="widget">
     <h3 class="widget-title">归档</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/02/">二月 2026</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/10/">十月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">八月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/06/">六月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -231,40 +231,10 @@
                 <a class="category-link" href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a>
               </p>
               <p class="item-title">
-                <a href="/2024/05/01/basic/%E5%B8%B8%E8%A7%81%E6%94%BB%E5%87%BB%E4%B8%8E%E6%BC%8F%E6%B4%9E/" class="title">常见攻击与漏洞</a>
+                <a href="/2026/02/28/basic/RAG%E5%AE%9E%E6%88%98/" class="title">RAG 实战：LangChain / Spring AI + Elasticsearch 构建私有知识库问答系统</a>
               </p>
               <p class="item-date">
-                <time datetime="2024-04-30T16:00:00.000Z" itemprop="datePublished">2024-05-01</time>
-              </p>
-            </div>
-          </li>
-          
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                <a class="category-link" href="/categories/%E5%BC%80%E5%8F%91%E9%83%A8%E7%BD%B2/">开发部署</a>
-              </p>
-              <p class="item-title">
-                <a href="/2023/11/11/devops/k8s/" class="title">K8S集群搭建</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2023-11-10T16:00:00.000Z" itemprop="datePublished">2023-11-11</time>
-              </p>
-            </div>
-          </li>
-          
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                <a class="category-link" href="/categories/%E5%BC%80%E5%8F%91%E9%83%A8%E7%BD%B2/">开发部署</a>
-              </p>
-              <p class="item-title">
-                <a href="/2023/05/07/devops/docker/" class="title">Docker部署一些组件</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2023-05-06T16:00:00.000Z" itemprop="datePublished">2023-05-07</time>
+                <time datetime="2026-02-27T16:00:00.000Z" itemprop="datePublished">2026-02-28</time>
               </p>
             </div>
           </li>
@@ -276,10 +246,10 @@
                 <a class="category-link" href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a>
               </p>
               <p class="item-title">
-                <a href="/2023/05/01/basic/%E5%B9%B6%E5%8F%91/" class="title">并发编程</a>
+                <a href="/2025/10/27/basic/numpy/" class="title">NumPy 快速入门与核心知识总结</a>
               </p>
               <p class="item-date">
-                <time datetime="2023-04-30T16:00:00.000Z" itemprop="datePublished">2023-05-01</time>
+                <time datetime="2025-10-27T14:00:00.000Z" itemprop="datePublished">2025-10-27</time>
               </p>
             </div>
           </li>
@@ -288,13 +258,43 @@
             
             <div class="item-inner">
               <p class="item-category">
-                <a class="category-link" href="/categories/%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A7/">解题技巧</a>
+                <a class="category-link" href="/categories/devops/">devops</a>
               </p>
               <p class="item-title">
-                <a href="/2022/08/08/algo/AC1337/" class="title">AC1337</a>
+                <a href="/2025/08/28/error/%E4%B8%80%E6%AC%A1Full%20GC/" class="title">一次 Full GC 频繁的排查过程</a>
               </p>
               <p class="item-date">
-                <time datetime="2022-08-07T16:00:00.000Z" itemprop="datePublished">2022-08-08</time>
+                <time datetime="2025-08-27T16:00:00.000Z" itemprop="datePublished">2025-08-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a>
+              </p>
+              <p class="item-title">
+                <a href="/2025/06/15/basic/LLM/" class="title">LLM</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2025-06-14T16:00:00.000Z" itemprop="datePublished">2025-06-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a>
+              </p>
+              <p class="item-title">
+                <a href="/2024/05/01/basic/%E5%B8%B8%E8%A7%81%E6%94%BB%E5%87%BB%E4%B8%8E%E6%BC%8F%E6%B4%9E/" class="title">常见攻击与漏洞</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-04-30T16:00:00.000Z" itemprop="datePublished">2024-05-01</time>
               </p>
             </div>
           </li>
@@ -359,7 +359,91 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h1 id="K8S集群搭建"><a href="#K8S集群搭建" class="headerlink" title="K8S集群搭建"></a>K8S集群搭建</h1>
+        <h1 id="K8S集群搭建"><a href="#K8S集群搭建" class="headerlink" title="K8S集群搭建"></a>K8S集群搭建</h1><p>对中小团队或个人开发者而言，使用 <code>kubectl</code> 命令行管理 K8s 集群，宛如“驾驶一辆没有仪表盘的汽车——你能开动它，却难以感知状态，更无法精细操控”。这时，一款轻量、易用的可视化管理面板能极大降低运维门槛。Kuboard 正是为此而生。</p>
+<p>本文将带你走完一条完整的实践链路：从使用 <code>kubeadm</code> 搭建 Kubernetes 集群、配置容器运行时与网络插件，到部署 Kuboard v3 并通过其图形界面完成应用发布与监控。全文基于 Ubuntu 22.04 系统演示，兼容主流 Linux 发行版。</p>
+<h2 id="1-环境准备"><a href="#1-环境准备" class="headerlink" title="1. 环境准备"></a>1. 环境准备</h2><h3 id="1-1-硬件与系统"><a href="#1-1-硬件与系统" class="headerlink" title="1.1 硬件与系统"></a>1.1 硬件与系统</h3><ul>
+<li><strong>操作系统</strong>：推荐 Ubuntu 20.04&#x2F;22.04 或 CentOS 7&#x2F;8</li>
+<li><strong>节点规划</strong>：至少 1 个控制平面 (master) + 1 个工作节点 (worker)</li>
+<li><strong>配置要求</strong>：每台机器 ≥ 2 核 CPU、4 GB 内存、50 GB 磁盘</li>
+</ul>
+<h3 id="1-2-所有节点基础配置-root-用户执行"><a href="#1-2-所有节点基础配置-root-用户执行" class="headerlink" title="1.2 所有节点基础配置 (root 用户执行)"></a>1.2 所有节点基础配置 (root 用户执行)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 关闭 swap</span></span><br><span class="line">swapoff -a</span><br><span class="line">sed -i <span class="string">&#x27;/ swap / s/^/#/&#x27;</span> /etc/fstab</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭防火墙 (ufw)</span></span><br><span class="line">ufw <span class="built_in">disable</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载内核模块</span></span><br><span class="line"><span class="built_in">cat</span> &lt;&lt;<span class="string">EOF &gt; /etc/modules-load.d/k8s.conf</span></span><br><span class="line"><span class="string">overlay</span></span><br><span class="line"><span class="string">br_netfilter</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line">modprobe overlay</span><br><span class="line">modprobe br_netfilter</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置内核参数</span></span><br><span class="line"><span class="built_in">cat</span> &lt;&lt;<span class="string">EOF &gt; /etc/sysctl.d/k8s.conf</span></span><br><span class="line"><span class="string">net.bridge.bridge-nf-call-iptables = 1</span></span><br><span class="line"><span class="string">net.ipv4.ip_forward = 1</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line">sysctl --system</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-容器运行时：Docker-与-containerd"><a href="#2-容器运行时：Docker-与-containerd" class="headerlink" title="2. 容器运行时：Docker 与 containerd"></a>2. 容器运行时：Docker 与 containerd</h2><p>Kubernetes 1.24 起移除了对 Docker 的直接支持，但 Docker 仍可通过 <code>cri-dockerd</code> 适配器工作。若团队更习惯 Docker 命令行，可继续使用；否则推荐 containerd，它是多数云原生发行版的默认运行时，资源占用更低。</p>
+<h3 id="2-1-使用-containerd-推荐"><a href="#2-1-使用-containerd-推荐" class="headerlink" title="2.1 使用 containerd (推荐)"></a>2.1 使用 containerd (推荐)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">apt-get update &amp;&amp; apt-get install -y containerd.io</span><br><span class="line"><span class="built_in">mkdir</span> -p /etc/containerd</span><br><span class="line">containerd config default &gt; /etc/containerd/config.toml</span><br><span class="line">sed -i <span class="string">&#x27;s/SystemdCgroup = false/SystemdCgroup = true/g&#x27;</span> /etc/containerd/config.toml</span><br><span class="line">systemctl restart containerd &amp;&amp; systemctl <span class="built_in">enable</span> containerd</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-使用-Docker-cri-dockerd"><a href="#2-2-使用-Docker-cri-dockerd" class="headerlink" title="2.2 使用 Docker + cri-dockerd"></a>2.2 使用 Docker + cri-dockerd</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1) 安装 Docker (略)</span></span><br><span class="line"><span class="comment"># 2) 安装 cri-dockerd 适配器</span></span><br><span class="line">wget https://github.com/Mirantis/cri-dockerd/releases/download/v0.3.1/cri-dockerd_0.3.1.3-0.ubuntu-focal_amd64.deb</span><br><span class="line">dpkg -i cri-dockerd_0.3.1.3-0.ubuntu-focal_amd64.deb</span><br><span class="line">systemctl <span class="built_in">enable</span> cri-docker &amp;&amp; systemctl start cri-docker</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>初始化时务必用 <code>--cri-socket</code> 指定正确的 socket 路径。</p>
+</blockquote>
+<h2 id="3-安装-kubeadm、kubelet-和-kubectl"><a href="#3-安装-kubeadm、kubelet-和-kubectl" class="headerlink" title="3. 安装 kubeadm、kubelet 和 kubectl"></a>3. 安装 kubeadm、kubelet 和 kubectl</h2><p>在所有节点上执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">apt-get update &amp;&amp; apt-get install -y apt-transport-https ca-certificates curl</span><br><span class="line">curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /&#x27;</span> | <span class="built_in">tee</span> /etc/apt/sources.list.d/kubernetes.list</span><br><span class="line">apt-get update</span><br><span class="line">apt-get install -y kubelet kubeadm kubectl</span><br><span class="line">apt-mark hold kubelet kubeadm kubectl</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-初始化控制平面-Master-并配置网络"><a href="#4-初始化控制平面-Master-并配置网络" class="headerlink" title="4. 初始化控制平面 (Master) 并配置网络"></a>4. 初始化控制平面 (Master) 并配置网络</h2><h3 id="4-1-kubeadm-init"><a href="#4-1-kubeadm-init" class="headerlink" title="4.1 kubeadm init"></a>4.1 kubeadm init</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># containerd 环境</span></span><br><span class="line">kubeadm init --pod-network-cidr=10.244.0.0/16 --cri-socket=unix:///run/containerd/containerd.sock</span><br><span class="line"></span><br><span class="line"><span class="comment"># Docker + cri-dockerd 环境</span></span><br><span class="line">kubeadm init --pod-network-cidr=10.244.0.0/16 --cri-socket=unix:///var/run/cri-dockerd.sock</span><br></pre></td></tr></table></figure>
+
+<p>记录下输出中的 <code>kubeadm join ...</code> 命令，后续工作节点需要。</p>
+<h3 id="4-2-配置-kubectl-访问"><a href="#4-2-配置-kubectl-访问" class="headerlink" title="4.2 配置 kubectl 访问"></a>4.2 配置 kubectl 访问</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p <span class="variable">$HOME</span>/.kube</span><br><span class="line"><span class="built_in">cp</span> -i /etc/kubernetes/admin.conf <span class="variable">$HOME</span>/.kube/config</span><br><span class="line"><span class="built_in">chown</span> $(<span class="built_in">id</span> -u):$(<span class="built_in">id</span> -g) <span class="variable">$HOME</span>/.kube/config</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-安装网络插件"><a href="#4-3-安装网络插件" class="headerlink" title="4.3 安装网络插件"></a>4.3 安装网络插件</h3><p>此时 <code>kubectl get nodes</code> 显示 <code>NotReady</code>，因为缺少 CNI 插件。推荐两个选项：</p>
+<ul>
+<li><p>**Flannel (简单易用)**：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>**Calico (功能强大，生产推荐)**：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.0/manifests/calico.yaml</span><br></pre></td></tr></table></figure>
+
+<p>安装后执行 <code>kubectl get pods -n kube-system</code>，确认所有 Pod 为 <code>Running</code>，master 节点变为 <code>Ready</code>。</p>
+</li>
+</ul>
+<h2 id="5-加入工作节点"><a href="#5-加入工作节点" class="headerlink" title="5. 加入工作节点"></a>5. 加入工作节点</h2><p>在所有 worker 节点上执行之前保存的 join 命令，并补充 <code>--cri-socket</code> 参数。示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubeadm <span class="built_in">join</span> 192.168.1.100:6443 --token &lt;token&gt; --discovery-token-ca-cert-hash sha256:&lt;<span class="built_in">hash</span>&gt; --cri-socket=unix:///run/containerd/containerd.sock</span><br></pre></td></tr></table></figure>
+
+<p>返回 master 执行 <code>kubectl get nodes</code>，稍后即可看到所有节点 <code>Ready</code>。</p>
+<h2 id="6-部署-Kuboard-v3-并导入集群"><a href="#6-部署-Kuboard-v3-并导入集群" class="headerlink" title="6. 部署 Kuboard v3 并导入集群"></a>6. 部署 Kuboard v3 并导入集群</h2><blockquote>
+<p><strong>说明</strong>：当前 Kuboard 有 v3 与 v4 两大版本。v4 支持更高版本的 Kubernetes (1.15‑1.34)，架构上从 etcd 转为 MySQL&#x2F;MariaDB&#x2F;PostgreSQL，并增加了高可用部署等特性。考虑到多数生产环境仍稳定使用 v3，且社区资料最丰富，本文以 <strong>v3 内建用户库方式</strong> 演示。若需要更新的 Kubernetes 适配或多集群切换体验，可参考 <a target="_blank" rel="noopener" href="https://www.kuboard.cn/v4/install/">Kuboard v4 安装文档</a>。</p>
+</blockquote>
+<h3 id="6-1-一键安装-Kuboard-v3"><a href="#6-1-一键安装-Kuboard-v3" class="headerlink" title="6.1 一键安装 Kuboard v3"></a>6.1 一键安装 Kuboard v3</h3><p>在 master 节点上，一条命令完成部署：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://addons.kuboard.cn/kuboard/kuboard-v3.yaml</span><br></pre></td></tr></table></figure>
+
+<p>该命令会创建 <code>kuboard</code> 命名空间，并自动部署所需的所有资源。</p>
+<h3 id="6-2-检查-Pod-与服务状态"><a href="#6-2-检查-Pod-与服务状态" class="headerlink" title="6.2 检查 Pod 与服务状态"></a>6.2 检查 Pod 与服务状态</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods -n kuboard</span><br><span class="line">kubectl get svc -n kuboard</span><br></pre></td></tr></table></figure>
+
+<p>所有 Pod <code>Running</code> 后，浏览器访问 <code>http://&lt;任意节点IP&gt;:30080</code>，初始登录凭据：</p>
+<ul>
+<li>用户名：<code>admin</code></li>
+<li>密码：<code>Kuboard123</code></li>
+</ul>
+<h3 id="6-3-导入集群"><a href="#6-3-导入集群" class="headerlink" title="6.3 导入集群"></a>6.3 导入集群</h3><p>首次登录后，Kuboard 会引导导入集群。选择 <strong>kubeconfig 文件</strong> 方式，粘贴以下命令输出的内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> ~/.kube/config</span><br></pre></td></tr></table></figure>
+
+<p>稍等片刻，集群状态即变为“已就绪”。</p>
+<h2 id="7-Kuboard-核心功能实操"><a href="#7-Kuboard-核心功能实操" class="headerlink" title="7. Kuboard 核心功能实操"></a>7. Kuboard 核心功能实操</h2><h3 id="7-1-图形化部署应用"><a href="#7-1-图形化部署应用" class="headerlink" title="7.1 图形化部署应用"></a>7.1 图形化部署应用</h3><ol>
+<li>切换到 <strong>“default”</strong> 命名空间（或新建一个）。</li>
+<li>点击 <strong>“创建工作负载”</strong> → 选择 <strong>“Deployment”</strong>。</li>
+<li>填写服务名称（如 <code>nginx-demo</code>），添加工作容器，指定镜像 <code>nginx:1.23-alpine</code>，设置容器端口 80。</li>
+<li>点击“保存”，Kuboard 会自动生成并应用 YAML，无需手动编写。</li>
+</ol>
+<h3 id="7-2-实时日志与终端"><a href="#7-2-实时日志与终端" class="headerlink" title="7.2 实时日志与终端"></a>7.2 实时日志与终端</h3><ul>
+<li><strong>查看日志</strong>：在 Deployment 详情页，点击任意 Pod → <strong>“日志”</strong> 标签，支持按容器筛选和实时刷新，无需输入 <code>kubectl logs -f</code>。</li>
+<li><strong>容器终端</strong>：点击 Pod 详情页的 <strong>“终端”</strong> 按钮，直接进入容器内部执行命令，相当于 <code>kubectl exec -it</code>。</li>
+</ul>
+<h3 id="7-3-资源监控"><a href="#7-3-资源监控" class="headerlink" title="7.3 资源监控"></a>7.3 资源监控</h3><p>Kuboard 内置了资源层监控套件。安装后，可直观查看节点和 Pod 的 CPU、内存等指标，支持阈值告警（如 Pod 内存超 80% 高亮提示）。</p>
+<h2 id="8-常见问题排查"><a href="#8-常见问题排查" class="headerlink" title="8. 常见问题排查"></a>8. 常见问题排查</h2><p>以下是根据实战经验总结的高频问题与解决思路：</p>
+<ul>
+<li>**Pod 无法启动 &#x2F; 镜像拉取失败 (<code>ErrImagePull</code>)**：首先 <code>docker pull</code> 或在各节点上手动拉取镜像确认网络可达；若为私有仓库，需在 Kuboard 创建镜像仓库密文并关联到 ServiceAccount。</li>
+<li><strong>Kuboard 登录后加载不出集群列表</strong>：通常是 token 过期导致。可用 <code>kubeadm token create --ttl 0</code> 生成永不过期的 token，重新导入配置。</li>
+<li><strong>导入集群时提示 “timeout”</strong>：通常因 Kuboard 无法访问 K8s API Server 所致。检查防火墙规则，确保 Kuboard 所在服务器能 ping 通 <code>kubernetes.default.svc</code>，且 master 节点端口 6443 已放行。</li>
+<li>**Kuboard 组件 <code>CrashLoopBackOff</code>**：先确认 master 节点已打上标签 <code>kubectl label nodes &lt;master-node-name&gt; k8s.kuboard.cn/role=etcd</code>；未打标会导致 kuboard-etcd 无法调度。</li>
+<li><strong>容器中 <code>docker ps</code> 失效</strong>：K8s 接管后，应改用 <code>crictl ps</code> (containerd) 或 <code>kubectl get pods</code> 查看容器，直接操作 Docker 会造成 Pod 状态异常。</li>
+</ul>
+<h2 id="9-结语"><a href="#9-结语" class="headerlink" title="9. 结语"></a>9. 结语</h2><p>至此，你已拥有一套从底层集群搭建到上层可视化管理覆盖的完整技术栈。回顾整个过程，核心要点可归纳为：</p>
+<ol>
+<li><strong>容器运行时</strong>的选择决定后续运维复杂度，containerd 是当前主流方向。</li>
+<li><strong>网络插件</strong>是集群从“摆设”到“可用”的关键一环，Flannel 适合快速上手，Calico 适合生产。</li>
+<li><strong>Kuboard</strong> 将复杂的 K8s 管理转化为直观操作，让开发人员无需记忆海量命令，让运维人员通过仪表盘快速发现异常。</li>
+</ol>
+<p>希望本文能帮助你少走弯路，快速建立起 K8s 管理与监控的实战能力。后续我会继续分享如何在这套体系上集成 CI&#x2F;CD 流水线与日志聚合方案，欢迎持续关注。</p>
+
       
     </div>
     <div class="article-footer">
