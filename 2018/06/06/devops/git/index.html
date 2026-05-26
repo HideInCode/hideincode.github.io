@@ -26,7 +26,7 @@
 <meta property="og:description" content="git解决了什么问题 分布式: 解决以前集中式单点文件服务器宕机的痛点,;由于git是分布式的vcs系统,无需联网就可以在本地提交保存各自的操作记录,最后与其他人合并推送到远程服务器保存即可.  轻量健全的分支系统:有想法就可以开分支,分支都在自己仓库内,不会影响其他人,便于切换和协作开发.  快:所有操作在本地,肯定会快. tips : git的学习曲线真的不算平滑,当然如果只是当个下载器那没啥">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-06-05T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-05-24T15:50:02.517Z">
+<meta property="article:modified_time" content="2026-05-25T23:47:10.588Z">
 <meta property="article:tag" content="devops">
 <meta name="twitter:card" content="summary">
   <!-- Canonical links -->
@@ -371,7 +371,7 @@
 <h2 id="建仓"><a href="#建仓" class="headerlink" title="建仓"></a>建仓</h2><blockquote>
 <p><code>git init </code></p>
 <p>git config –global user.name “sui”</p>
-<p>git config –global user.email “<a href="mailto:&#x61;&#64;&#x62;&#x2e;&#99;&#x6f;&#109;">&#x61;&#64;&#x62;&#x2e;&#99;&#x6f;&#109;</a>“</p>
+<p>git config –global user.email “<a href="mailto:&#97;&#64;&#98;&#x2e;&#99;&#111;&#x6d;">&#97;&#64;&#98;&#x2e;&#99;&#111;&#x6d;</a>“</p>
 <p><code>git config --list</code> 查看现有配置</p>
 <p>初始化仓库,配置自己的<code>名字</code>和<code>邮箱</code></p>
 </blockquote>
@@ -434,7 +434,7 @@
 <h2 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h2><p>轻量的,无需副本的,支持频繁合并</p>
 <blockquote>
 <p>HEAD 是一个指向当前所在的本地分支,可以把HEAD想象成当前分支的别名.</p>
-<p>切换分支会重置工作区,而且工作目录和暂存区没有提交的内容如果和checkout的分支有冲突,那么将会切换失败,此时要先解决冲突.</p>
+<p>切换分支会重置工作区,而且工作目录和暂存区没有提交的内容.如果和checkout的分支有冲突,那么将会切换失败,此时要先解决冲突.</p>
 <p>冲突是指某个文件某一部分进行了不同的修改,这个是git无法处理的,合并完需要用<code>git add</code>来标记为已解决.</p>
 </blockquote>
 <blockquote>
@@ -460,19 +460,16 @@
 <p><code>git checkout -b release origin/release</code> 建立一个指向远程release的本地分支</p>
 <p><code>git push origin --delete hotFix</code> 删除服务器上的hotFix分支</p>
 </blockquote>
-<h3 id="变基"><a href="#变基" class="headerlink" title="变基"></a>变基</h3><blockquote>
-<p>给另一个分支A当儿子,找到当前分支和A的最近公共祖先结点,把最近祖先结点后到当前的提交并入A下.</p>
-<p>相比于merge的优点:使提交历史更加简洁,把并行开发弄得像穿行开发.</p>
-<p>相同点:结果快照和merge都是一样的,只是变更了历史.</p>
-<p>tips: git merge 有直接移动HEAD指针的功能</p>
-<p><strong>wanrning</strong>: <strong>如果提交存在于你的仓库之外，而别人可能基于这些提交进行开发，那么不要执行变基。</strong></p>
-</blockquote>
-<blockquote>
-<p><code>git rebase master</code> 当前分支接着master</p>
-<p><code>git rebase --onto master server client</code> 这里server拉取于master,client拉取于server,把属于client但是不属于server的提交变基到master下.<strong>git可以把树的当前节点合并到任意节点下</strong></p>
-<p><code>git rebase &lt;basebranch&gt; &lt;topicbranch&gt;</code> 直接将topic合入master,无需切换分支</p>
-<p><code>git pull --rebase</code> 正确拉取已经被编辑的提交</p>
-</blockquote>
+<h3 id="变基"><a href="#变基" class="headerlink" title="变基"></a>变基</h3><ul>
+<li>把当前节点转移成另一个分支的子节点</li>
+<li>相比于merge：会丢掉父节点的提交记录，使提交历史更加简洁。</li>
+<li>相同点:结果快照和merge都是一样的,只是变更了历史，git merge 有直接移动HEAD指针的功能</li>
+<li><strong>只对自己本地还没推送到公共仓库的提交做 rebase。</strong> 如果分支已经被别人拉取过或者已经推送到共享仓库，我不会强制 rebase，而是用 <code>merge</code> 保持历史安全。</li>
+<li><code>git rebase master</code> 当前分支接着master</li>
+<li><code>git rebase --onto master server client</code> 这里server拉取于master,client拉取于server,把属于client但是不属于server的提交变基到master下.<strong>git可以把树的当前节点合并到任意节点下</strong></li>
+<li><code>git rebase &lt;basebranch&gt; &lt;topicbranch&gt;</code> 直接将topic合入master,无需切换分支</li>
+<li><code>git pull --rebase</code> 正确拉取已经被编辑的提交</li>
+</ul>
 <h2 id="服务器上的Git"><a href="#服务器上的Git" class="headerlink" title="服务器上的Git"></a>服务器上的Git</h2><blockquote>
 <p>基于不同协议传输数据</p>
 <ol>

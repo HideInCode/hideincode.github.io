@@ -26,7 +26,7 @@
 <meta property="og:description" content="AC1337 用于记录刷题的一些思路和技巧  算法可行性   数据规模 算法可接受时间复杂度    &lt;&#x3D; 10 O(n!)   &lt;&#x3D; 20 O(2^n)   &lt;&#x3D; 100 O(n^4)   &lt;&#x3D; 500 O(n^3)   &lt;&#x3D; 2500 O(n^2)   &lt;&#x3D; 10^6 O(nlogn)   &lt;&amp;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-07T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-07-14T06:12:30.592Z">
+<meta property="article:modified_time" content="2026-05-26T15:29:39.788Z">
 <meta property="article:tag" content="algo">
 <meta name="twitter:card" content="summary">
   <!-- Canonical links -->
@@ -419,28 +419,35 @@
 <li>优先队列</li>
 </ul>
 <h2 id="树型逻辑"><a href="#树型逻辑" class="headerlink" title="树型逻辑"></a>树型逻辑</h2><h3 id="回溯"><a href="#回溯" class="headerlink" title="回溯"></a>回溯</h3><h4 id="组合问题"><a href="#组合问题" class="headerlink" title="组合问题"></a>组合问题</h4><ol>
-<li><p>无重复元素，可重复选择，组合出一个target; </p>
+<li><p>可重复选择，组合出一个target; </p>
 <ul>
-<li>下一层起点为i，这样保证只会从当前元素后开始往后选。</li>
+<li>定义start为当前处理元素的下标</li>
+<li>对[start, n - 1]的元素进行搜索</li>
+<li>下一层起点为i，保证重复选择。</li>
 </ul>
 </li>
-<li><p>有重复元素，不可重复选择，组合出一个target;</p>
-<ol>
-<li>排序，使得相同元素连在一起。</li>
-<li>跳过相同元素。</li>
-<li>从i + 1开始进入下层搜索。</li>
-</ol>
+<li><p>不可重复选择，组合出一个target;</p>
+<ul>
+<li><p>排序，使得相同元素连在一起。</p>
+</li>
+<li><p>搜索时候跳过相同元素。</p>
+</li>
+<li><p>同可重复选择逻辑，不过下层起点变成i+1,保证不重复。</p>
+</li>
+</ul>
 </li>
 </ol>
 <h4 id="排列问题"><a href="#排列问题" class="headerlink" title="排列问题"></a>排列问题</h4><ol>
 <li>无重复元素，所有排列情况;<ul>
 <li>朴素版本(记录决策树):<ul>
-<li>无需start，需要visited标记。</li>
+<li>递归遍历所有情况</li>
+<li>visited标记路径上已经加入处理的元素</li>
 </ul>
 </li>
 <li>进阶版本(交换元素):<ul>
-<li>考虑start后面的每个位置来填充start，知道start到达n;即通过交换i，start;</li>
-<li>下一层为start+1，即下一个要填的位置;</li>
+<li>定义start为当前需要交换的位置</li>
+<li>start达到n后结束，当前数组为一次排列</li>
+<li>start与[start, n - 1]每个元素交换，注意从start开始不然会丢失nums[start]开头的排列</li>
 <li>这样[0，start]就是统计过的排列，[start+1，n-1]就是待统计的。</li>
 </ul>
 </li>
@@ -448,9 +455,8 @@
 </li>
 <li>有重复元素<ol>
 <li>排序</li>
-<li>每次都从头开始搜</li>
-<li>相同元素跳过</li>
-<li>vis数组标记已经计算过的元素</li>
+<li>搜的时候跳过相同元素</li>
+<li>同无重复数据一样回溯</li>
 </ol>
 </li>
 </ol>
@@ -461,9 +467,8 @@
 </ol>
 </li>
 <li>有重复元素，找所有子集:<ol>
-<li>回溯:无重复情况+排序判断相邻元素去重。</li>
-<li>状态压缩:无重复情况+排序判断相邻元素去重。即前一个元素相同但是没有被选择，那么选择当前情况必定重复。因为当前的情况之前肯定统计过了，考虑[1，2，2]的第二个2。。。</li>
-<li>对重复元素排序处理:保证相同情况在同一层出现，出现一次就行了，后面都不再统计。</li>
+<li>回溯:排序+搜索时跳过重复元素，剩余逻辑同无重复数字。</li>
+<li>状态压缩:排序+搜索时跳过重复元素，剩余同无重复逻辑。</li>
 <li>剪枝:有些时候需要贪心的先解决大的，大的搞不定小的肯定也不行。</li>
 </ol>
 </li>
@@ -513,7 +518,7 @@
 <li>一般有标记法和交换法</li>
 <li>标记法<ol>
 <li>对归位后的数字进行标记，提前把负数改成N+1</li>
-<li>把值对应的位置上的值加上负号，即nums[nums[i] - 1] &#x3D; -abs(nums[nums[i] - 1])</li>
+<li>把值对应的位置上的值加上负号，即<code>nums[nums[i] - 1] = -abs(nums[nums[i] - 1])</code></li>
 <li>没有标记为负数的就是没有归位的，即为缺失之数</li>
 </ol>
 </li>
@@ -530,7 +535,7 @@
 <li>用dif数组还原修改结果。</li>
 </ol>
 <p>不需要首项</p>
- <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;diff。length;i++)&#123;</span><br><span class="line"> 	dif[i]+=dif[i-<span class="number">1</span>];</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;diff.length;i++)&#123;</span><br><span class="line"> 	dif[i]+=dif[i-<span class="number">1</span>];</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 
 <p> 需要首项</p>
  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dif[<span class="number">0</span>]=nums[<span class="number">0</span>];</span><br><span class="line"> <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;diff.length;i++)&#123;</span><br><span class="line"> 	dif[i]=dif[i-<span class="number">1</span>]+nums[i];</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></li>
@@ -541,7 +546,7 @@
 <p>前缀和其实也是一种动态规划，拥有最优子结构，用于范围求和。而且前缀和中元素一般都是递增的，可以用二分搜索。</p>
 </blockquote>
 </li>
-<li><p>后缀和：有些情况需要求<code>i</code>左边的结果和<code>i</code>右边的结果，来简化计算，需要同时求前缀和与后缀和。</p>
+<li><p>后缀和：有些情况需要预先知道元素左边的和、元素右边的和，需要同时求前缀和与后缀和。</p>
 </li>
 <li><p>背包问题</p>
 <blockquote>
@@ -549,7 +554,7 @@
 </blockquote>
 <ul>
 <li><p><strong>0-1背包</strong>：每个物品只有一个</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始情况：只放一个物品</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m + <span class="number">1</span>):</span><br><span class="line">    f[<span class="number">0</span>][i] = values[<span class="number">0</span>]</span><br><span class="line"><span class="comment"># 可交换内外for</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(m + <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> j - caps[i] &gt;= <span class="number">0</span>:</span><br><span class="line">            f[i][j] = <span class="built_in">max</span>(f[i - <span class="number">1</span>][j], f[i - <span class="number">1</span>][j - caps[i]] + values[i])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一维化，用来计算新值的位置不能被随意修改</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">    <span class="comment"># 必须由大到小</span></span><br><span class="line">	<span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(m, caps[i] - <span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> j - values[i]:</span><br><span class="line">        	f[j] = <span class="built_in">max</span>(f[j], f[j - caps[i]] + values[i]) </span><br><span class="line"><span class="comment"># 排列问题求方案数，不同顺序不同方案，需要先遍历容量。</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(target + <span class="number">1</span>):</span><br><span class="line">    <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始情况：只放一个物品</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m + <span class="number">1</span>):</span><br><span class="line">    f[<span class="number">0</span>][i] = values[<span class="number">0</span>]</span><br><span class="line"><span class="comment"># 可交换内外for</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(m + <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> j - caps[i] &gt;= <span class="number">0</span>:</span><br><span class="line">            f[i][j] = <span class="built_in">max</span>(f[i - <span class="number">1</span>][j], f[i - <span class="number">1</span>][j - caps[i]] + values[i])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 空间一维化</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">    <span class="comment"># 必须由大到小，用来计算新值的位置不能被随意修改</span></span><br><span class="line">	<span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(m, caps[i] - <span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> j - values[i]:</span><br><span class="line">        	f[j] = <span class="built_in">max</span>(f[j], f[j - caps[i]] + values[i]) </span><br><span class="line"><span class="comment"># 排列问题求方案数，不同顺序不同方案，需要先遍历容量。</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(target + <span class="number">1</span>):</span><br><span class="line">    <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 </li>
 <li><p><strong>完全背包</strong>: 每个物品有无数个</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可交换for循环内外</span></span><br><span class="line"><span class="keyword">for</span>(<span class="built_in">int</span> i=<span class="number">0</span>;i&lt;cnt;i++)&#123;</span><br><span class="line">    //又小到大，可以交换循环位置。</span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">int</span> j=<span class="number">0</span>;j&lt;=cap;j++)&#123;</span><br><span class="line">        dp[j]=<span class="built_in">max</span>(dp[j]，dp[j-w[i]]+v[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -725,12 +730,12 @@
   <ul class="pager pull-left">
     
     <li class="prev">
-      <a href="/2023/05/01/basic/%E5%B9%B6%E5%8F%91/" title="并发编程"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+      <a href="/2022/08/08/algo/%E6%A8%A1%E6%9D%BF/" title="模板"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
     </li>
     
     
     <li class="next">
-      <a href="/2022/08/08/algo/%E6%A8%A1%E6%9D%BF/" title="模板"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2022/07/07/basic/%E7%BD%91%E7%BB%9C/" title="网络"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
