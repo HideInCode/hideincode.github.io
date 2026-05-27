@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>解题技巧 | HideInCode</title>
+  <meta name="description" content="用于提升解题速度复杂度要求   数据规模 N 最大可接受时间复杂度 常见算法示例    ≤ 10 O(N!) 全排列（回溯）   ≤ 20 O(2^N) 子集枚举、状态压缩 DP   ≤ 100 O(N^3) Floyd-Warshall、区间 DP、三重循环   ≤ 500 O(N^3) 勉强 某些 DP（较小常数）   ≤ 2,000 O(N^2) 冒泡、插入、简单 DP（如 LIS 朴素版）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解题技巧">
+<meta property="og:url" content="https://hideincode.github.io/2026/05/01/algo/%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A7/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="用于提升解题速度复杂度要求   数据规模 N 最大可接受时间复杂度 常见算法示例    ≤ 10 O(N!) 全排列（回溯）   ≤ 20 O(2^N) 子集枚举、状态压缩 DP   ≤ 100 O(N^3) Floyd-Warshall、区间 DP、三重循环   ≤ 500 O(N^3) 勉强 某些 DP（较小常数）   ≤ 2,000 O(N^2) 冒泡、插入、简单 DP（如 LIS 朴素版）">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-04-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-05-27T05:31:25.058Z">
+<meta property="article:tag" content="algo">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://hideincode.github.io/2026/05/01/algo/%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A7/index.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.css">
+  
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/HideInCode" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">HideInCode</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">服务端工程师</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 深圳</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/HideInCode" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>个人知识归纳，转载注明出处。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%BA%90%E7%A0%81/">源码</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/">环境部署</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">系统设计</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/">问题排查</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/" rel="tag">AI</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/" rel="tag">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LangChain/" rel="tag">LangChain</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS/" rel="tag">OS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RAG/" rel="tag">RAG</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-AI/" rel="tag">Spring AI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algo/" rel="tag">algo</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code/" rel="tag">code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/concurrent/" rel="tag">concurrent</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devops/" rel="tag">devops</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/" rel="tag">error</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/system-design/" rel="tag">system design</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/threads/" rel="tag">threads</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1/" rel="tag">代码设计</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/" rel="tag">加密算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%91%E9%87%8F%E6%A3%80%E7%B4%A2/" rel="tag">向量检索</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/" rel="tag">知识库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="tag">网络安全</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/AI/" style="font-size: 13.33px;">AI</a> <a href="/tags/Elasticsearch/" style="font-size: 13px;">Elasticsearch</a> <a href="/tags/JVM/" style="font-size: 13px;">JVM</a> <a href="/tags/LangChain/" style="font-size: 13px;">LangChain</a> <a href="/tags/OS/" style="font-size: 13px;">OS</a> <a href="/tags/RAG/" style="font-size: 13px;">RAG</a> <a href="/tags/Spring-AI/" style="font-size: 13px;">Spring AI</a> <a href="/tags/algo/" style="font-size: 13.67px;">algo</a> <a href="/tags/code/" style="font-size: 13.33px;">code</a> <a href="/tags/concurrent/" style="font-size: 13px;">concurrent</a> <a href="/tags/devops/" style="font-size: 14px;">devops</a> <a href="/tags/error/" style="font-size: 13.33px;">error</a> <a href="/tags/system-design/" style="font-size: 14px;">system design</a> <a href="/tags/threads/" style="font-size: 13px;">threads</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1/" style="font-size: 13px;">代码设计</a> <a href="/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/" style="font-size: 13px;">加密算法</a> <a href="/tags/%E5%90%91%E9%87%8F%E6%A3%80%E7%B4%A2/" style="font-size: 13px;">向量检索</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/" style="font-size: 13px;">知识库</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13px;">网络</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" style="font-size: 13px;">网络安全</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/05/">五月 2026</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/02/">二月 2026</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/10/">十月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">八月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/06/">六月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">三月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+              </p>
+              <p class="item-title">
+                <a href="/2026/05/27/algo/LeetCode%E6%8C%87%E5%8D%97/" class="title">LeetCode指南</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2026-05-26T16:00:00.000Z" itemprop="datePublished">2026-05-27</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+              </p>
+              <p class="item-title">
+                <a href="/2026/05/01/algo/%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A7/" class="title">解题技巧</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2026-04-30T16:00:00.000Z" itemprop="datePublished">2026-05-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+              </p>
+              <p class="item-title">
+                <a href="/2026/05/01/algo/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" class="title">背包问题</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2026-04-30T16:00:00.000Z" itemprop="datePublished">2026-05-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">系统设计</a>
+              </p>
+              <p class="item-title">
+                <a href="/2026/02/28/system/RAG%E5%AE%9E%E6%88%98/" class="title">RAG 实战：LangChain / Spring AI + Elasticsearch 构建私有知识库问答系统</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2026-02-27T16:00:00.000Z" itemprop="datePublished">2026-02-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a>
+              </p>
+              <p class="item-title">
+                <a href="/2025/10/27/basic/numpy/" class="title">NumPy 快速入门与核心知识总结</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2025-10-27T14:00:00.000Z" itemprop="datePublished">2025-10-27</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-algo/解题技巧" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      解题技巧
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2026/05/01/algo/%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A7/" class="article-date">
+	  <time datetime="2026-04-30T16:00:00.000Z" itemprop="datePublished">2026-05-01</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/algo/" rel="tag">algo</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2026/05/01/algo/%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A7/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="用于提升解题速度"><a href="#用于提升解题速度" class="headerlink" title="用于提升解题速度"></a>用于提升解题速度</h1><h1 id="复杂度要求"><a href="#复杂度要求" class="headerlink" title="复杂度要求"></a>复杂度要求</h1><table>
+<thead>
+<tr>
+<th align="left">数据规模 N</th>
+<th align="left">最大可接受时间复杂度</th>
+<th align="left">常见算法示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">≤ 10</td>
+<td align="left">O(N!)</td>
+<td align="left">全排列（回溯）</td>
+</tr>
+<tr>
+<td align="left">≤ 20</td>
+<td align="left">O(2^N)</td>
+<td align="left">子集枚举、状态压缩 DP</td>
+</tr>
+<tr>
+<td align="left">≤ 100</td>
+<td align="left">O(N^3)</td>
+<td align="left">Floyd-Warshall、区间 DP、三重循环</td>
+</tr>
+<tr>
+<td align="left">≤ 500</td>
+<td align="left">O(N^3) 勉强</td>
+<td align="left">某些 DP（较小常数）</td>
+</tr>
+<tr>
+<td align="left">≤ 2,000</td>
+<td align="left">O(N^2)</td>
+<td align="left">冒泡、插入、简单 DP（如 LIS 朴素版）</td>
+</tr>
+<tr>
+<td align="left">≤ 10^4</td>
+<td align="left">O(N√N) 或 O(N log^2 N)</td>
+<td align="left">分块、莫队算法</td>
+</tr>
+<tr>
+<td align="left">≤ 10^5</td>
+<td align="left">O(N log N)</td>
+<td align="left">快排、归并、线段树、树状数组、Dijkstra、二分答案</td>
+</tr>
+<tr>
+<td align="left">≤ 10^6</td>
+<td align="left">O(N log N) 或 O(N)</td>
+<td align="left">线性筛、双指针、前缀和、单调栈、BFS&#x2F;DFS</td>
+</tr>
+<tr>
+<td align="left">≤ 10^7</td>
+<td align="left">O(N) 或 O(N log log N)</td>
+<td align="left">埃氏筛、线性 DP、桶排序</td>
+</tr>
+<tr>
+<td align="left">≤ 10^8</td>
+<td align="left">严格 O(N)，常数极小</td>
+<td align="left">简单遍历（一般较少）</td>
+</tr>
+<tr>
+<td align="left">&gt; 10^8</td>
+<td align="left">O(1) 或 O(log N)</td>
+<td align="left">公式计算、数学推导、二分法</td>
+</tr>
+</tbody></table>
+<h3 id="补充说明"><a href="#补充说明" class="headerlink" title="补充说明"></a>补充说明</h3><ol>
+<li><strong>常数因子很重要</strong><br>O(N log N) 在 N&#x3D;10^5 秒过，但 N&#x3D;10^6 时若操作复杂（如 map&#x2F;set 大量插入）可能超时。Python 通常会比 C++ 慢 10~50 倍，需保守估计：一般认为 Python 每秒运算约 5×10^7 次，C++ 约 2×10^8 ~ 5×10^8 次。</li>
+<li><strong>内存限制</strong><br>通常为 256MB：<ul>
+<li><code>int[N]</code>（N&#x3D;10^6）≈ 4MB（C++）&#x2F; 28MB（Python 对象开销大）</li>
+<li><code>int[N][N]</code>（N&#x3D;2000）≈ 4MB（C++）但在 Python 中极易爆内存，需用 <code>list</code> 慎重，或改用其他结构。</li>
+</ul>
+</li>
+<li><strong>特殊场景</strong><ul>
+<li>如果有多组测试用例，需考虑总复杂度。假设 T&#x3D;10^5，总复杂度必须 ≤ O(N) 或 O(N log N) 且 N 为所有用例数据总和。</li>
+<li>递归深度：Python 默认递归上限 1000，DFS 图&#x2F;树时需要改写成栈，或 <code>sys.setrecursionlimit(1000000)</code>。</li>
+</ul>
+</li>
+</ol>
+<p>掌握这些对应关系后，你就可以快速判断一道题该用什么算法。</p>
+<h1 id="题目特征"><a href="#题目特征" class="headerlink" title="题目特征"></a>题目特征</h1><h3 id="1-双指针-滑动窗口"><a href="#1-双指针-滑动窗口" class="headerlink" title="1. 双指针 &#x2F; 滑动窗口"></a>1. 双指针 &#x2F; 滑动窗口</h3><ul>
+<li><strong>适用特征</strong>：数组&#x2F;字符串，求满足某种条件的<strong>子数组&#x2F;子串</strong>，或要求<strong>原地修改</strong>。</li>
+<li><strong>思考路径</strong>：<ul>
+<li>是否需要两端收缩？→ 左右指针</li>
+<li>是否需要维护一个窗口满足条件？→ 滑动窗口</li>
+<li>是否需要快慢步调？→ 快慢指针（环检测、找中点）</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-二分查找"><a href="#2-二分查找" class="headerlink" title="2. 二分查找"></a>2. 二分查找</h3><ul>
+<li><strong>适用特征</strong>：数据<strong>有序</strong>（或可以构造出有序性），求目标值、边界，或答案值域连续可判定。</li>
+<li><strong>思考路径</strong>：<ul>
+<li>基本二分：在有序数组中找目标。</li>
+<li>二分答案：问题可以转化为“对于某个 x，是否能满足条件？”（最小化最大值&#x2F;最大化最小值&#x2F;第K小）</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-动态规划"><a href="#3-动态规划" class="headerlink" title="3. 动态规划"></a>3. 动态规划</h3><ul>
+<li><strong>适用特征</strong>：求最优解、总数、路径数，且大问题可分解为重叠子问题。</li>
+<li><strong>思考路径</strong>：<ul>
+<li>一维 DP：当前状态只与前一两个状态有关（爬楼梯、打家劫舍）</li>
+<li>二维 DP：两个序列&#x2F;字符串（最长公共子序列、编辑距离）</li>
+<li>背包模型：物品 + 容量限制（分割等和子集、零钱兑换）</li>
+<li>区间 DP：回文、石子合并</li>
+<li>状态机 DP：买卖股票系列</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-DFS-BFS（搜索与回溯）"><a href="#4-DFS-BFS（搜索与回溯）" class="headerlink" title="4. DFS &#x2F; BFS（搜索与回溯）"></a>4. DFS &#x2F; BFS（搜索与回溯）</h3><ul>
+<li><strong>适用特征</strong>：求所有方案、路径、连通性，或图&#x2F;树的遍历。</li>
+<li><strong>思考路径</strong>：<ul>
+<li>BFS：最短路径、最短步数、层序遍历 → 用队列</li>
+<li>DFS：所有排列&#x2F;组合、连通块、树的后序遍历 → 递归&#x2F;栈</li>
+<li>回溯：路径探索 + 撤销选择（全排列、N皇后）</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-贪心"><a href="#5-贪心" class="headerlink" title="5. 贪心"></a>5. 贪心</h3><ul>
+<li><strong>适用特征</strong>：最优解可通过局部最优累积得到，具有贪心选择性质（区间调度、跳跃游戏）。</li>
+<li><strong>思考路径</strong>：排序 + 按某种优先级选取。通常需要证明或感觉可行（先尝试贪心，失败再转 DP）。</li>
+</ul>
+<h3 id="6-哈希表"><a href="#6-哈希表" class="headerlink" title="6. 哈希表"></a>6. 哈希表</h3><ul>
+<li><strong>适用特征</strong>：快速查找、去重、计数、映射关系。</li>
+<li><strong>思考路径</strong>：两数之和（找互补）、最长连续序列（set 快速判断邻居）、前缀和 + 哈希（和为K的子数组个数）</li>
+</ul>
+<h3 id="7-栈-单调栈"><a href="#7-栈-单调栈" class="headerlink" title="7. 栈 &#x2F; 单调栈"></a>7. 栈 &#x2F; 单调栈</h3><ul>
+<li><strong>适用特征</strong>：括号匹配、表达式求值、找下一个更大&#x2F;更小元素、区间边界问题。</li>
+<li><strong>思考路径</strong>：单调递增&#x2F;递减栈能快速确定以某个元素为最值的区间（柱状图最大矩形、接雨水、每日温度）</li>
+</ul>
+<h3 id="8-数学与位运算"><a href="#8-数学与位运算" class="headerlink" title="8. 数学与位运算"></a>8. 数学与位运算</h3><ul>
+<li><strong>适用特征</strong>：数字规律、幂运算、唯一出现、二进制状态压缩。</li>
+<li><strong>思考路径</strong>：快速幂、异或性质、摩尔投票、素数筛、最大公约数。</li>
+</ul>
+<h2 id="常用技巧（优化代码和性能）"><a href="#常用技巧（优化代码和性能）" class="headerlink" title="常用技巧（优化代码和性能）"></a>常用技巧（优化代码和性能）</h2><h3 id="1-降低时间复杂度的编码技巧"><a href="#1-降低时间复杂度的编码技巧" class="headerlink" title="1. 降低时间复杂度的编码技巧"></a>1. 降低时间复杂度的编码技巧</h3><ul>
+<li><strong>用空间换时间</strong>：提前存储中间计算结果（记忆化搜索、前缀和、哈希缓存）</li>
+<li><strong>二分代替线性查找</strong>：在有序或可判定序列中快速定位边界</li>
+<li><strong>双指针降维</strong>：将 O(n²) 的遍历变为 O(n)（如三数之和固定一端后双指针）</li>
+<li><strong>位运算加速</strong>：<code>n &amp; (n-1)</code> 去掉最后一位 1，<code>x &amp; -x</code> 取 lowbit，快速判断奇偶 <code>n &amp; 1</code></li>
+</ul>
+<h3 id="2-边界处理技巧"><a href="#2-边界处理技巧" class="headerlink" title="2. 边界处理技巧"></a>2. 边界处理技巧</h3><ul>
+<li><strong>虚拟头节点</strong>：链表操作避免判空</li>
+<li><strong>数组长度加 1</strong>：前缀和方便计算区间和</li>
+<li><strong>哨兵&#x2F;填充</strong>：二维网格四周填充特殊值减少越界判断</li>
+</ul>
+<h3 id="3-代码简化技巧"><a href="#3-代码简化技巧" class="headerlink" title="3. 代码简化技巧"></a>3. 代码简化技巧</h3><ul>
+<li><strong>使用 Python 特性</strong>：<code>collections.Counter</code> 计数，<code>defaultdict</code> 省去初始化判断，<code>enumerate</code> 同时取索引和值</li>
+<li><strong>列表推导式</strong>快速生成数组</li>
+<li><strong><code>@lru_cache</code></strong> 自动记忆化 DFS</li>
+<li><strong><code>heapq</code></strong> 快速实现优先队列</li>
+</ul>
+<h3 id="4-调试与验证"><a href="#4-调试与验证" class="headerlink" title="4. 调试与验证"></a>4. 调试与验证</h3><ul>
+<li><strong>手写小样例推演</strong>：遇到卡壳时用笔在纸上画出 dp 表或树图</li>
+<li><strong>打印中间状态</strong>：关键位置 <code>print</code> 检查变量是否符合预期</li>
+<li><strong>对拍</strong>：写个暴力解和优化解对比随机小数据</li>
+</ul>
+<hr>
+<h2 id="三、如何提高做题速度"><a href="#三、如何提高做题速度" class="headerlink" title="三、如何提高做题速度"></a>三、如何提高做题速度</h2><h3 id="1-建立题型反射弧（模式识别）"><a href="#1-建立题型反射弧（模式识别）" class="headerlink" title="1. 建立题型反射弧（模式识别）"></a>1. 建立题型反射弧（模式识别）</h3><ul>
+<li>按之前整理的知识分类刷题，每种类型刷 10~20 道，直到看到题目描述就能条件反射出解法模型。</li>
+<li><strong>关键词映射表</strong>（部分）：<ul>
+<li>“最长公共子序列” → 二维 DP</li>
+<li>“子数组和为 K” → 前缀和 + 哈希</li>
+<li>“下一个更大元素” → 单调栈</li>
+<li>“所有可能的组合” → 回溯</li>
+<li>“最短路径” → BFS</li>
+<li>“最大值最小&#x2F;最小值最大” → 二分答案</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-精通常用模板（达到闭眼能写）"><a href="#2-精通常用模板（达到闭眼能写）" class="headerlink" title="2. 精通常用模板（达到闭眼能写）"></a>2. 精通常用模板（达到闭眼能写）</h3><ul>
+<li>至少熟练以下模板，无需重新思考边界：<ul>
+<li>二分查找（左闭右闭&#x2F;左闭右开）</li>
+<li>回溯框架（路径、选择列表、撤销）</li>
+<li>01背包&#x2F;完全背包（一维优化正逆序）</li>
+<li>BFS 层序遍历（队列 + size 分层）</li>
+<li>快排&#x2F;归并模板</li>
+<li>单调栈模板</li>
+<li>并查集 + 路径压缩</li>
+</ul>
+</li>
+</ul>
+<h1 id="特征表格"><a href="#特征表格" class="headerlink" title="特征表格"></a>特征表格</h1><h3 id="1-根据问题目标"><a href="#1-根据问题目标" class="headerlink" title="1. 根据问题目标"></a>1. 根据问题目标</h3><table>
+<thead>
+<tr>
+<th align="left">目标</th>
+<th align="left">优先考虑</th>
+<th align="left">典型题目</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">求<strong>所有具体方案</strong>（全排列、组合、子集、路径）</td>
+<td align="left">回溯 &#x2F; DFS + 剪枝</td>
+<td align="left">LC 46, 78, 131</td>
+</tr>
+<tr>
+<td align="left">求<strong>最优值</strong>（最大&#x2F;最小&#x2F;最长&#x2F;最短）</td>
+<td align="left">贪心 &#x2F; DP &#x2F; 二分答案 &#x2F; 滑动窗口 &#x2F; BFS</td>
+<td align="left">LC 53, 322, 121, 42</td>
+</tr>
+<tr>
+<td align="left">求<strong>方案总数</strong></td>
+<td align="left">DP（计数型）&#x2F; 背包 &#x2F; 数学组合</td>
+<td align="left">LC 494, 518, 62</td>
+</tr>
+<tr>
+<td align="left">判断<strong>是否存在 &#x2F; 可行性</strong></td>
+<td align="left">DP &#x2F; 贪心 &#x2F; BFS &#x2F; 并查集</td>
+<td align="left">LC 55, 416, 200</td>
+</tr>
+<tr>
+<td align="left">求<strong>具体位置 &#x2F; 下标</strong>（第k大、首个缺失等）</td>
+<td align="left">二分 &#x2F; 堆 &#x2F; 快速选择 &#x2F; 哈希</td>
+<td align="left">LC 215, 41</td>
+</tr>
+<tr>
+<td align="left">多次<strong>区间查询&#x2F;修改</strong></td>
+<td align="left">前缀和 &#x2F; 线段树 &#x2F; 树状数组 &#x2F; 莫队</td>
+<td align="left">LC 307, 327</td>
+</tr>
+<tr>
+<td align="left">子序列（不连续）</td>
+<td align="left">DP &#x2F; 双指针</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">子数组（连续）</td>
+<td align="left">滑动窗口 &#x2F; 前缀和</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">下一个更大 &#x2F; 更小</td>
+<td align="left">单调栈</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="2-根据数据结构"><a href="#2-根据数据结构" class="headerlink" title="2. 根据数据结构"></a>2. 根据数据结构</h3><h4 id="数组-字符串"><a href="#数组-字符串" class="headerlink" title="数组 &#x2F; 字符串"></a>数组 &#x2F; 字符串</h4><table>
+<thead>
+<tr>
+<th align="left">题目特征</th>
+<th align="left">推荐算法 &#x2F; 技巧</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">有序数组，查找目标</td>
+<td align="left"><strong>二分查找</strong></td>
+</tr>
+<tr>
+<td align="left">两数之和 &#x2F; 三数之和 &#x2F; 多数之和</td>
+<td align="left">哈希表 + 双指针</td>
+</tr>
+<tr>
+<td align="left">子数组和为 K（连续）</td>
+<td align="left"><strong>前缀和 + 哈希</strong></td>
+</tr>
+<tr>
+<td align="left">滑动窗口（连续子数组&#x2F;子串满足条件）</td>
+<td align="left"><strong>双指针滑动窗口</strong></td>
+</tr>
+<tr>
+<td align="left">下一个更大元素 &#x2F; 每日温度</td>
+<td align="left"><strong>单调栈</strong></td>
+</tr>
+<tr>
+<td align="left">区间更新、区间查询</td>
+<td align="left">线段树 &#x2F; 树状数组</td>
+</tr>
+<tr>
+<td align="left">子序列（不连续）</td>
+<td align="left">DP &#x2F; 双指针（贪心）</td>
+</tr>
+<tr>
+<td align="left">最长回文子串</td>
+<td align="left">中心扩展 &#x2F; Manacher</td>
+</tr>
+<tr>
+<td align="left">最长公共子序列（LCS）</td>
+<td align="left">二维 DP</td>
+</tr>
+<tr>
+<td align="left">最长递增子序列（LIS）</td>
+<td align="left">DP O(N²) &#x2F; 贪心+二分 O(N log N)</td>
+</tr>
+<tr>
+<td align="left">字符串匹配</td>
+<td align="left">KMP &#x2F; 字符串哈希 &#x2F; Trie</td>
+</tr>
+<tr>
+<td align="left">字母异位词 &#x2F; 字符计数</td>
+<td align="left">哈希表（计数字典）&#x2F; 排序</td>
+</tr>
+<tr>
+<td align="left">括号匹配 &#x2F; 表达式求值</td>
+<td align="left"><strong>栈</strong></td>
+</tr>
+</tbody></table>
+<h4 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h4><table>
+<thead>
+<tr>
+<th align="left">题目特征</th>
+<th align="left">推荐算法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">反转链表（整体&#x2F;部分）</td>
+<td align="left">迭代双指针 &#x2F; 递归</td>
+</tr>
+<tr>
+<td align="left">找环入口</td>
+<td align="left"><strong>快慢指针</strong></td>
+</tr>
+<tr>
+<td align="left">删除倒数第 N 个节点</td>
+<td align="left">双指针（快指针先走 N 步）</td>
+</tr>
+<tr>
+<td align="left">合并有序链表</td>
+<td align="left">归并 &#x2F; 堆（K 路归并）</td>
+</tr>
+<tr>
+<td align="left">复制复杂链表</td>
+<td align="left">哈希表 &#x2F; 节点间插入</td>
+</tr>
+</tbody></table>
+<h4 id="树-二叉树"><a href="#树-二叉树" class="headerlink" title="树 &#x2F; 二叉树"></a>树 &#x2F; 二叉树</h4><table>
+<thead>
+<tr>
+<th align="left">题目特征</th>
+<th align="left">推荐算法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">遍历（前&#x2F;中&#x2F;后序、层序）</td>
+<td align="left">DFS（递归&#x2F;栈），BFS（队列）</td>
+</tr>
+<tr>
+<td align="left">求深度 &#x2F; 直径</td>
+<td align="left">DFS 后序遍历</td>
+</tr>
+<tr>
+<td align="left">最近公共祖先（LCA）</td>
+<td align="left">DFS（后序判断） &#x2F; 倍增</td>
+</tr>
+<tr>
+<td align="left">路径和（从根到叶，任意路径）</td>
+<td align="left">DFS + 回溯 &#x2F; 前缀和 + 哈希</td>
+</tr>
+<tr>
+<td align="left">判断 BST &#x2F; 对称性</td>
+<td align="left">DFS + 区间限制 &#x2F; 迭代</td>
+</tr>
+<tr>
+<td align="left">构造二叉树（前序+中序等）</td>
+<td align="left">递归分治</td>
+</tr>
+</tbody></table>
+<h4 id="图"><a href="#图" class="headerlink" title="图"></a>图</h4><table>
+<thead>
+<tr>
+<th align="left">题目特征</th>
+<th align="left">推荐算法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">遍历所有节点</td>
+<td align="left">DFS &#x2F; BFS</td>
+</tr>
+<tr>
+<td align="left">连通块数量 &#x2F; 岛屿问题</td>
+<td align="left">DFS &#x2F; BFS &#x2F; 并查集</td>
+</tr>
+<tr>
+<td align="left">最短路径（无权）</td>
+<td align="left"><strong>BFS</strong></td>
+</tr>
+<tr>
+<td align="left">最短路径（带权，无负权）</td>
+<td align="left">Dijkstra</td>
+</tr>
+<tr>
+<td align="left">多源最短路径</td>
+<td align="left">多源 BFS &#x2F; Floyd</td>
+</tr>
+<tr>
+<td align="left">拓扑排序 &#x2F; 课程表</td>
+<td align="left">Kahn BFS &#x2F; DFS 判环</td>
+</tr>
+<tr>
+<td align="left">动态连通性 &#x2F; 冗余连接</td>
+<td align="left"><strong>并查集</strong></td>
+</tr>
+<tr>
+<td align="left">最小生成树</td>
+<td align="left">Kruskal &#x2F; Prim</td>
+</tr>
+<tr>
+<td align="left">二分图判定</td>
+<td align="left">BFS&#x2F;DFS 染色</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="3-根据关键字"><a href="#3-根据关键字" class="headerlink" title="3. 根据关键字"></a>3. 根据关键字</h3><table>
+<thead>
+<tr>
+<th align="left">看到这个关键词&#x2F;条件</th>
+<th align="left">应该想到</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>所有可能</strong> &#x2F; 列出所有</td>
+<td align="left">回溯</td>
+</tr>
+<tr>
+<td align="left"><strong>最优值</strong> + 决策有后效性</td>
+<td align="left">DP</td>
+</tr>
+<tr>
+<td align="left"><strong>贪心</strong>（局部最优推全局最优）</td>
+<td align="left">排序 + 贪心选择（先尝试，证不了再 DP）</td>
+</tr>
+<tr>
+<td align="left"><strong>分割 &#x2F; 划分</strong></td>
+<td align="left">DP &#x2F; 回溯</td>
+</tr>
+<tr>
+<td align="left"><strong>子数组（连续）</strong></td>
+<td align="left">滑动窗口 &#x2F; 前缀和</td>
+</tr>
+<tr>
+<td align="left"><strong>子序列（不连续）</strong></td>
+<td align="left">DP &#x2F; 双指针</td>
+</tr>
+<tr>
+<td align="left"><strong>最长 &#x2F; 最短</strong></td>
+<td align="left">BFS &#x2F; 滑动窗口 &#x2F; DP &#x2F; 二分答案</td>
+</tr>
+<tr>
+<td align="left"><strong>最大 &#x2F; 最小</strong></td>
+<td align="left">DP &#x2F; 贪心 &#x2F; 单调栈 &#x2F; 二分答案</td>
+</tr>
+<tr>
+<td align="left"><strong>第 K 大 &#x2F; 小</strong></td>
+<td align="left">堆（优先队列） &#x2F; 快速选择</td>
+</tr>
+<tr>
+<td align="left"><strong>数据流</strong> &#x2F; 动态添加</td>
+<td align="left">堆 &#x2F; 有序集合</td>
+</tr>
+<tr>
+<td align="left"><strong>回文</strong></td>
+<td align="left">中心扩展 &#x2F; DP &#x2F; Manacher</td>
+</tr>
+<tr>
+<td align="left"><strong>公共前缀</strong></td>
+<td align="left">Trie 字典树</td>
+</tr>
+<tr>
+<td align="left"><strong>异或</strong></td>
+<td align="left">前缀异或 + 哈希 &#x2F; Trie</td>
+</tr>
+<tr>
+<td align="left"><strong>环形</strong></td>
+<td align="left">破环成链 &#x2F; 取模 &#x2F; 两次遍历</td>
+</tr>
+<tr>
+<td align="left"><strong>重复 &#x2F; 缺失 &#x2F; 只出现一次</strong></td>
+<td align="left">哈希 &#x2F; 位运算（异或）&#x2F; 循环排序</td>
+</tr>
+<tr>
+<td align="left"><strong>矩阵 &#x2F; 网格</strong></td>
+<td align="left">DFS &#x2F; BFS &#x2F; DP</td>
+</tr>
+<tr>
+<td align="left"><strong>跳跃游戏</strong></td>
+<td align="left">贪心 &#x2F; DP</td>
+</tr>
+<tr>
+<td align="left"><strong>股票买卖</strong></td>
+<td align="left">状态机 DP</td>
+</tr>
+<tr>
+<td align="left"><strong>括号生成 &#x2F; 验证</strong></td>
+<td align="left">回溯 &#x2F; 栈 &#x2F; DP</td>
+</tr>
+<tr>
+<td align="left"><strong>排列 &#x2F; 组合 &#x2F; 子集</strong></td>
+<td align="left">回溯 + 剪枝</td>
+</tr>
+<tr>
+<td align="left"><strong>最短路径（网格带障碍）</strong></td>
+<td align="left">BFS</td>
+</tr>
+<tr>
+<td align="left"><strong>多源</strong></td>
+<td align="left">多源 BFS &#x2F; 并查集</td>
+</tr>
+<tr>
+<td align="left"><strong>螺旋 &#x2F; 旋转</strong></td>
+<td align="left">模拟 &#x2F; 寻找规律</td>
+</tr>
+<tr>
+<td align="left"><strong>区间重叠 &#x2F; 合并 &#x2F; 删除</strong></td>
+<td align="left">贪心（按起点&#x2F;终点排序）</td>
+</tr>
+<tr>
+<td align="left">有环 &#x2F; 连通 &#x2F; 合并</td>
+<td align="left">并查集</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://hideincode.github.io/2026/05/01/algo/%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A7/" title="解题技巧" target="_blank" rel="external">https://hideincode.github.io/2026/05/01/algo/解题技巧/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/HideInCode" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/HideInCode" target="_blank"><span class="text-dark">HideInCode</span><small class="ml-1x">服务端工程师</small></a></h3>
+        <div>后端玩家</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2026/05/27/algo/LeetCode%E6%8C%87%E5%8D%97/" title="LeetCode指南"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2026/05/01/algo/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" title="背包问题"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/HideInCode" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	<!-- Theme by <a href="https://github.com/" target="_blank">  </a>base on <a href="https://github.com/" target="_blank">pure</a>. -->
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <script src="//cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'Ov23livjuFqQWx8aX0PX',
+    clientSecret: 'e5e9a0c7d063781f24450bf3b143293dc613001d',
+    repo: 'gitalk-comments',
+    owner: 'HideInCode',
+    admin: ['HideInCode'],
+    id: md5(location.pathname),
+    distractionFreeMode: true,
+    language: 'zh-CN',
+    enableHotKey: 'true'
+  })
+  gitalk.render('comments')
+  </script>
+      
+
+
+
+
+
+
+
+</body>
+</html>

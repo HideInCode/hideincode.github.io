@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>数学问题 | HideInCode</title>
+  <meta name="description" content="AC1337数学问题数论1. 最大公约数（GCD）与最小公倍数（LCM）1234567def gcd(a, b):    while b:        a, b &#x3D; b, a % b    return adef lcm(a, b):    return a * b &#x2F;&#x2F; gcd(a, b)  2. 快速幂（二分幂）求 a^b mod m，O(log b)。 12345678def qpow(a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数学问题">
+<meta property="og:url" content="https://hideincode.github.io/2022/08/08/algo/%E6%95%B0%E5%AD%A6%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="AC1337数学问题数论1. 最大公约数（GCD）与最小公倍数（LCM）1234567def gcd(a, b):    while b:        a, b &#x3D; b, a % b    return adef lcm(a, b):    return a * b &#x2F;&#x2F; gcd(a, b)  2. 快速幂（二分幂）求 a^b mod m，O(log b)。 12345678def qpow(a">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-05-27T05:31:37.483Z">
+<meta property="article:tag" content="algo">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://hideincode.github.io/2022/08/08/algo/%E6%95%B0%E5%AD%A6%E9%97%AE%E9%A2%98/index.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.css">
+  
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/HideInCode" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">HideInCode</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">服务端工程师</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 深圳</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/HideInCode" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>个人知识归纳，转载注明出处。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%BA%90%E7%A0%81/">源码</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/">环境部署</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">系统设计</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/">问题排查</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/" rel="tag">AI</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/" rel="tag">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LangChain/" rel="tag">LangChain</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS/" rel="tag">OS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RAG/" rel="tag">RAG</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-AI/" rel="tag">Spring AI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algo/" rel="tag">algo</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code/" rel="tag">code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/concurrent/" rel="tag">concurrent</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devops/" rel="tag">devops</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/" rel="tag">error</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/system-design/" rel="tag">system design</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/threads/" rel="tag">threads</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1/" rel="tag">代码设计</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/" rel="tag">加密算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%91%E9%87%8F%E6%A3%80%E7%B4%A2/" rel="tag">向量检索</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/" rel="tag">知识库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="tag">网络安全</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/AI/" style="font-size: 13.33px;">AI</a> <a href="/tags/Elasticsearch/" style="font-size: 13px;">Elasticsearch</a> <a href="/tags/JVM/" style="font-size: 13px;">JVM</a> <a href="/tags/LangChain/" style="font-size: 13px;">LangChain</a> <a href="/tags/OS/" style="font-size: 13px;">OS</a> <a href="/tags/RAG/" style="font-size: 13px;">RAG</a> <a href="/tags/Spring-AI/" style="font-size: 13px;">Spring AI</a> <a href="/tags/algo/" style="font-size: 13.67px;">algo</a> <a href="/tags/code/" style="font-size: 13.33px;">code</a> <a href="/tags/concurrent/" style="font-size: 13px;">concurrent</a> <a href="/tags/devops/" style="font-size: 14px;">devops</a> <a href="/tags/error/" style="font-size: 13.33px;">error</a> <a href="/tags/system-design/" style="font-size: 14px;">system design</a> <a href="/tags/threads/" style="font-size: 13px;">threads</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1/" style="font-size: 13px;">代码设计</a> <a href="/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/" style="font-size: 13px;">加密算法</a> <a href="/tags/%E5%90%91%E9%87%8F%E6%A3%80%E7%B4%A2/" style="font-size: 13px;">向量检索</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/" style="font-size: 13px;">知识库</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13px;">网络</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" style="font-size: 13px;">网络安全</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/05/">五月 2026</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/02/">二月 2026</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/10/">十月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">八月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/06/">六月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">三月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+              </p>
+              <p class="item-title">
+                <a href="/2026/05/27/algo/LeetCode%E6%8C%87%E5%8D%97/" class="title">LeetCode指南</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2026-05-26T16:00:00.000Z" itemprop="datePublished">2026-05-27</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+              </p>
+              <p class="item-title">
+                <a href="/2026/05/01/algo/%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A7/" class="title">解题技巧</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2026-04-30T16:00:00.000Z" itemprop="datePublished">2026-05-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+              </p>
+              <p class="item-title">
+                <a href="/2026/05/01/algo/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" class="title">背包问题</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2026-04-30T16:00:00.000Z" itemprop="datePublished">2026-05-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">系统设计</a>
+              </p>
+              <p class="item-title">
+                <a href="/2026/02/28/system/RAG%E5%AE%9E%E6%88%98/" class="title">RAG 实战：LangChain / Spring AI + Elasticsearch 构建私有知识库问答系统</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2026-02-27T16:00:00.000Z" itemprop="datePublished">2026-02-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a>
+              </p>
+              <p class="item-title">
+                <a href="/2025/10/27/basic/numpy/" class="title">NumPy 快速入门与核心知识总结</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2025-10-27T14:00:00.000Z" itemprop="datePublished">2025-10-27</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-algo/数学问题" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      数学问题
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2022/08/08/algo/%E6%95%B0%E5%AD%A6%E9%97%AE%E9%A2%98/" class="article-date">
+	  <time datetime="2022-08-07T16:00:00.000Z" itemprop="datePublished">2022-08-08</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/algo/" rel="tag">algo</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/08/08/algo/%E6%95%B0%E5%AD%A6%E9%97%AE%E9%A2%98/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="AC1337"><a href="#AC1337" class="headerlink" title="AC1337"></a>AC1337</h1><h1 id="数学问题"><a href="#数学问题" class="headerlink" title="数学问题"></a>数学问题</h1><h3 id="数论"><a href="#数论" class="headerlink" title="数论"></a>数论</h3><h3 id="1-最大公约数（GCD）与最小公倍数（LCM）"><a href="#1-最大公约数（GCD）与最小公倍数（LCM）" class="headerlink" title="1. 最大公约数（GCD）与最小公倍数（LCM）"></a>1. 最大公约数（GCD）与最小公倍数（LCM）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">gcd</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">while</span> b:</span><br><span class="line">        a, b = b, a % b</span><br><span class="line">    <span class="keyword">return</span> a</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">lcm</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">return</span> a * b // gcd(a, b)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-快速幂（二分幂）"><a href="#2-快速幂（二分幂）" class="headerlink" title="2. 快速幂（二分幂）"></a>2. 快速幂（二分幂）</h3><p>求 <code>a^b mod m</code>，O(log b)。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">qpow</span>(<span class="params">a, b, mod</span>):</span><br><span class="line">    res = <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> b:</span><br><span class="line">        <span class="keyword">if</span> b &amp; <span class="number">1</span>:</span><br><span class="line">            res = res * a % mod</span><br><span class="line">        a = a * a % mod</span><br><span class="line">        b &gt;&gt;= <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-模运算性质与逆元"><a href="#3-模运算性质与逆元" class="headerlink" title="3. 模运算性质与逆元"></a>3. 模运算性质与逆元</h3><ul>
+<li><code>(a + b) % m = (a%m + b%m) % m</code></li>
+<li><code>(a * b) % m = (a%m * b%m) % m</code></li>
+<li>逆元：若 <code>m</code> 为质数，<code>a</code> 的逆元为 <code>qpow(a, m-2, m)</code>（费马小定理）。</li>
+<li>预处理阶乘与阶乘逆元（O(N)），用于快速求组合数。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">fact = [<span class="number">1</span>] * (N+<span class="number">1</span>)</span><br><span class="line">inv_fact = [<span class="number">1</span>] * (N+<span class="number">1</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, N+<span class="number">1</span>):</span><br><span class="line">    fact[i] = fact[i-<span class="number">1</span>] * i % MOD</span><br><span class="line">inv_fact[N] = qpow(fact[N], MOD-<span class="number">2</span>, MOD)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(N, <span class="number">0</span>, -<span class="number">1</span>):</span><br><span class="line">    inv_fact[i-<span class="number">1</span>] = inv_fact[i] * i % MOD</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">C</span>(<span class="params">n, k</span>):</span><br><span class="line">    <span class="keyword">if</span> k &lt; <span class="number">0</span> <span class="keyword">or</span> k &gt; n: <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> fact[n] * inv_fact[k] % MOD * inv_fact[n-k] % MOD</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-素数判定与筛法"><a href="#4-素数判定与筛法" class="headerlink" title="4. 素数判定与筛法"></a>4. 素数判定与筛法</h3><p><strong>试除法判单点素数</strong>：O(√n)。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">is_prime</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">if</span> n &lt; <span class="number">2</span>: <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    i = <span class="number">2</span></span><br><span class="line">    <span class="keyword">while</span> i * i &lt;= n:</span><br><span class="line">        <span class="keyword">if</span> n % i == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        i += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>埃氏筛</strong>（O(n log log n)）：求 1~n 所有素数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">is_p = [<span class="literal">True</span>] * (n+<span class="number">1</span>)</span><br><span class="line">is_p[<span class="number">0</span>] = is_p[<span class="number">1</span>] = <span class="literal">False</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, <span class="built_in">int</span>(n**<span class="number">0.5</span>)+<span class="number">1</span>):</span><br><span class="line">    <span class="keyword">if</span> is_p[i]:</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i*i, n+<span class="number">1</span>, i):</span><br><span class="line">            is_p[j] = <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>线性筛（欧拉筛）</strong>（O(n)），同时可求最小质因子。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">primes = []</span><br><span class="line">is_p = [<span class="literal">True</span>] * (n+<span class="number">1</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, n+<span class="number">1</span>):</span><br><span class="line">    <span class="keyword">if</span> is_p[i]:</span><br><span class="line">        primes.append(i)</span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> primes:</span><br><span class="line">        <span class="keyword">if</span> i * p &gt; n: <span class="keyword">break</span></span><br><span class="line">        is_p[i * p] = <span class="literal">False</span></span><br><span class="line">        <span class="keyword">if</span> i % p == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="5-质因数分解"><a href="#5-质因数分解" class="headerlink" title="5. 质因数分解"></a>5. 质因数分解</h3><p>O(√n)：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">factorize</span>(<span class="params">n</span>):</span><br><span class="line">    res = []</span><br><span class="line">    i = <span class="number">2</span></span><br><span class="line">    <span class="keyword">while</span> i * i &lt;= n:</span><br><span class="line">        <span class="keyword">while</span> n % i == <span class="number">0</span>:</span><br><span class="line">            res.append(i)</span><br><span class="line">            n //= i</span><br><span class="line">        i += <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> n &gt; <span class="number">1</span>: res.append(n)</span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<h2 id="二、组合数学"><a href="#二、组合数学" class="headerlink" title="二、组合数学"></a>二、组合数学</h2><h3 id="1-排列数与组合数公式"><a href="#1-排列数与组合数公式" class="headerlink" title="1. 排列数与组合数公式"></a>1. 排列数与组合数公式</h3><ul>
+<li>排列数：<code>P(n, k) = n! / (n-k)!</code></li>
+<li>组合数：<code>C(n, k) = n! / (k! * (n-k)!)</code></li>
+</ul>
+<p>常用递推式（杨辉三角，O(n²) 预处理）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C = [[<span class="number">0</span>]*(n+<span class="number">1</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n+<span class="number">1</span>)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n+<span class="number">1</span>):</span><br><span class="line">    C[i][<span class="number">0</span>] = C[i][i] = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, i):</span><br><span class="line">        C[i][j] = C[i-<span class="number">1</span>][j-<span class="number">1</span>] + C[i-<span class="number">1</span>][j]</span><br></pre></td></tr></table></figure>
+
+<h4 id="组合数取余"><a href="#组合数取余" class="headerlink" title="组合数取余"></a>组合数取余</h4><blockquote>
+<p>从n中取m个元素，记为C(n， m) &#x3D; n! &#x2F; (m! * (n - m)!)，又知C(n， m) &#x3D; C(n - 1， m - 1) + C(n - 1， m);</p>
+</blockquote>
+<ul>
+<li><p>求C(n， m) % M</p>
+<ul>
+<li><p>O(n^2)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">M</span> <span class="operator">=</span> (<span class="type">int</span>)<span class="number">1e9</span>+<span class="number">7</span>;</span><br><span class="line"><span class="type">long</span> C[<span class="number">1005</span>][<span class="number">1005</span>];</span><br><span class="line"><span class="keyword">void</span> <span class="title function_">getC</span><span class="params">(<span class="type">int</span> n)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;=n;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;=i;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(j==<span class="number">0</span> || j==i)</span><br><span class="line">                C[i][j]=<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                C[i][j]=(C[i-<span class="number">1</span>][j-<span class="number">1</span>]+C[i-<span class="number">1</span>][j]) % M;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>O(n)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//逆元方法</span></span><br><span class="line"><span class="type">int</span> <span class="variable">mo</span> <span class="operator">=</span> (<span class="type">int</span>)<span class="number">1e9</span> + <span class="number">7</span>;</span><br><span class="line"><span class="type">long</span> <span class="title function_">C</span><span class="params">(<span class="type">long</span> n，<span class="type">long</span> m)</span>&#123;</span><br><span class="line">    <span class="type">long</span> M=<span class="number">0</span>，inv[N]，mul[N]，invMul[N];</span><br><span class="line">    <span class="keyword">while</span>(M&lt;=n)&#123;</span><br><span class="line">        <span class="keyword">if</span>(M)&#123;</span><br><span class="line">            inv[M]=M==<span class="number">1</span>?<span class="number">1</span>:(mo-mo/M)*inv[mo%M]%mo;</span><br><span class="line">            mul[M]=mul[M-<span class="number">1</span>]*M%mo;</span><br><span class="line">            invMul[M]=invMul[M-<span class="number">1</span>]*inv[M]%mo;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> mul[M]=<span class="number">1</span>，invMul[M]=<span class="number">1</span>;</span><br><span class="line">        M++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> mul[n]*invMul[m]%mo*invMul[n-m]%mo;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果对质数求余，可用Lucas定理在O(n)复杂度解决</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">long</span> <span class="title function_">Lucas</span><span class="params">(<span class="type">long</span> n，<span class="type">long</span> m，<span class="type">long</span> p)</span>&#123;</span><br><span class="line">	<span class="type">long</span> ans=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(n|m)ans=ans*C(n%P，m%P)%P，n/=P，m/=P;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="2-卡特兰数"><a href="#2-卡特兰数" class="headerlink" title="2. 卡特兰数"></a>2. 卡特兰数</h3><p>应用：合法括号序列、出栈序列、二叉树形态计数、凸多边形三角剖分等。</p>
+<p>递推：<br><code>C0 = 1</code>, <code>C_&#123;n+1&#125; = sum(C_i * C_&#123;n-i&#125; for i in range(n+1))</code></p>
+<p>通项：<code>C_n = C(2n, n) / (n+1) = C(2n, n) - C(2n, n+1)</code></p>
+<p>计算：可用预处理阶乘直接 O(1) 求单点，或 O(n) 递推：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 递推 O(n)</span></span><br><span class="line">c = <span class="number">1</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n+<span class="number">1</span>):</span><br><span class="line">    c = c * (<span class="number">4</span>*i - <span class="number">2</span>) // (i + <span class="number">1</span>)   <span class="comment"># 整数除法</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-容斥原理"><a href="#3-容斥原理" class="headerlink" title="3. 容斥原理"></a>3. 容斥原理</h3><p>用于求并集大小：<code>|A ∪ B ∪ C| = |A| + |B| + |C| - |A∩B| - |A∩C| - |B∩C| + |A∩B∩C|</code></p>
+<p>典型题目：能被多个质数整除的数的计数、错排问题等。</p>
+<h3 id="4-错排问题（Derangement）"><a href="#4-错排问题（Derangement）" class="headerlink" title="4. 错排问题（Derangement）"></a>4. 错排问题（Derangement）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D(<span class="number">0</span>)=<span class="number">1</span>, D(<span class="number">1</span>)=<span class="number">0</span>`，递推：`D(n) = (n-<span class="number">1</span>) * (D(n-<span class="number">1</span>) + D(n-<span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="三、概率与期望"><a href="#三、概率与期望" class="headerlink" title="三、概率与期望"></a>三、概率与期望</h2><h3 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1. 基本概念"></a>1. 基本概念</h3><ul>
+<li>概率 &#x3D; 满足条件的方案数 &#x2F; 总方案数（古典概型）。</li>
+<li>期望 &#x3D; sum(值 * 概率)。</li>
+<li><strong>期望的线性性质</strong>：<code>E[X+Y] = E[X] + E[Y]</code>（无论是否独立）。</li>
+</ul>
+<h3 id="2-常见题型"><a href="#2-常见题型" class="headerlink" title="2. 常见题型"></a>2. 常见题型</h3><ul>
+<li><strong>随机采样</strong>：洗牌算法、水塘抽样、带权采样（前缀和+二分）、拒绝采样（用已知分布生成目标分布的样本）。</li>
+<li><strong>概率 DP</strong>：定义状态概率，根据全概率公式递推（如新21点、飞机座位分配）。</li>
+<li><strong>期望 DP</strong>：经常倒推，设 <code>dp[i]</code> 为从状态 i 到终点的期望步数&#x2F;值。</li>
+<li><strong>随机数生成</strong>：利用 <code>rand7</code> 实现 <code>rand10</code> 等拓展。</li>
+<li><strong>计算贡献</strong>：求每个元素在最终结果中的期望贡献然后求和。</li>
+<li><strong>蒙特卡洛模拟</strong>：通过大量随机试验逼近真实值（如求 π 值）。</li>
+</ul>
+<h3 id="2-2-常用模板"><a href="#2-2-常用模板" class="headerlink" title="2.2 常用模板"></a>2.2 常用模板</h3><h4 id="Fisher-Yates-洗牌算法"><a href="#Fisher-Yates-洗牌算法" class="headerlink" title="Fisher-Yates 洗牌算法"></a>Fisher-Yates 洗牌算法</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">shuffle</span>(<span class="params">nums</span>):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(nums)-<span class="number">1</span>, <span class="number">0</span>, -<span class="number">1</span>):</span><br><span class="line">        j = random.randint(<span class="number">0</span>, i)</span><br><span class="line">        nums[i], nums[j] = nums[j], nums[i]</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="水塘抽样（数据流中随机取-1-个）"><a href="#水塘抽样（数据流中随机取-1-个）" class="headerlink" title="水塘抽样（数据流中随机取 1 个）"></a>水塘抽样（数据流中随机取 1 个）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">reservoir_sampling</span>(<span class="params">stream</span>):</span><br><span class="line">    selected = <span class="literal">None</span></span><br><span class="line">    <span class="keyword">for</span> i, item <span class="keyword">in</span> <span class="built_in">enumerate</span>(stream):</span><br><span class="line">        <span class="keyword">if</span> random.randint(<span class="number">0</span>, i) == <span class="number">0</span>:</span><br><span class="line">            selected = item</span><br><span class="line">    <span class="keyword">return</span> selected</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="拒绝采样（示例：用-rand7-实现-rand10）"><a href="#拒绝采样（示例：用-rand7-实现-rand10）" class="headerlink" title="拒绝采样（示例：用 rand7 实现 rand10）"></a>拒绝采样（示例：用 rand7 实现 rand10）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">rand10</span>():</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="comment"># 生成 1~49 的均匀分布</span></span><br><span class="line">        num = (rand7() - <span class="number">1</span>) * <span class="number">7</span> + rand7()</span><br><span class="line">        <span class="keyword">if</span> num &lt;= <span class="number">40</span>:</span><br><span class="line">            <span class="keyword">return</span> num % <span class="number">10</span> + <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="带权重的随机选择（前缀和-二分）"><a href="#带权重的随机选择（前缀和-二分）" class="headerlink" title="带权重的随机选择（前缀和 + 二分）"></a>带权重的随机选择（前缀和 + 二分）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random, bisect</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, w</span>):</span><br><span class="line">        self.prefix = [<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> w:</span><br><span class="line">            self.prefix.append(self.prefix[-<span class="number">1</span>] + x)</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">pickIndex</span>(<span class="params">self</span>):</span><br><span class="line">        r = random.randint(<span class="number">1</span>, self.prefix[-<span class="number">1</span>])</span><br><span class="line">        <span class="keyword">return</span> bisect.bisect_left(self.prefix, r) - <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、位运算技巧"><a href="#四、位运算技巧" class="headerlink" title="四、位运算技巧"></a>四、位运算技巧</h2><h3 id="1-常用操作"><a href="#1-常用操作" class="headerlink" title="1. 常用操作"></a>1. 常用操作</h3><table>
+<thead>
+<tr>
+<th align="left">操作</th>
+<th align="left">代码</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">判断奇偶</td>
+<td align="left"><code>n &amp; 1</code></td>
+<td align="left">1为奇数</td>
+</tr>
+<tr>
+<td align="left">取第 k 位</td>
+<td align="left"><code>(n &gt;&gt; k) &amp; 1</code></td>
+<td align="left">最低位为0位</td>
+</tr>
+<tr>
+<td align="left">将第 k 位置1</td>
+<td align="left">&#96;n</td>
+<td align="left">(1 &lt;&lt; k)&#96;</td>
+</tr>
+<tr>
+<td align="left">将第 k 位置0</td>
+<td align="left"><code>n &amp; ~(1 &lt;&lt; k)</code></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">消去最低位1</td>
+<td align="left"><code>n &amp; (n - 1)</code></td>
+<td align="left">Brian Kernighan 算法，用于统计1的个数</td>
+</tr>
+<tr>
+<td align="left">取最低位1（lowbit）</td>
+<td align="left"><code>n &amp; -n</code></td>
+<td align="left">树状数组核心</td>
+</tr>
+<tr>
+<td align="left">判断是否为2的幂</td>
+<td align="left"><code>n &gt; 0 and n &amp; (n-1) == 0</code></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">异或性质</td>
+<td align="left"><code>a ^ a = 0</code>, <code>a ^ 0 = a</code></td>
+<td align="left">找唯一出现奇数次数字</td>
+</tr>
+</tbody></table>
+<h3 id="2-位运算实现加法"><a href="#2-位运算实现加法" class="headerlink" title="2. 位运算实现加法"></a>2. 位运算实现加法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">while</span> b:</span><br><span class="line">        carry = (a &amp; b) &lt;&lt; <span class="number">1</span></span><br><span class="line">        a = a ^ b</span><br><span class="line">        b = carry</span><br><span class="line">    <span class="keyword">return</span> a</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<h2 id="五、几何基础"><a href="#五、几何基础" class="headerlink" title="五、几何基础"></a>五、几何基础</h2><h3 id="核心知识点"><a href="#核心知识点" class="headerlink" title="核心知识点"></a>核心知识点</h3><ul>
+<li><strong>向量表示与运算</strong>：点 <code>(x, y)</code> 可视为向量，支持加减、数乘、点积、叉积。</li>
+<li><strong>点积</strong>：<code>a · b = x1*x2 + y1*y2</code>，用于判断夹角（垂直时点积为0，钝角为负，锐角为正）。</li>
+<li><strong>叉积</strong>：<code>a × b = x1*y2 - y1*x2</code>，结果的正负表示方向（右手法则），常用于判断线段相交、点在多边形内外、凸包构建。</li>
+<li><strong>线段相交</strong>：快速排斥实验 + 跨立实验（利用叉积判断）。</li>
+<li><strong>凸包</strong>：给定平面上若干点，求最小凸多边形包含所有点。常用 <strong>Andrew 算法</strong>（单调链）或 Graham 扫描。</li>
+<li><strong>扫描线</strong>：处理矩形面积&#x2F;周长并、天际线等问题，将事件排序后扫描。</li>
+<li><strong>最近点对</strong>：分治经典问题，按 x 坐标排序后左右分治，合并时检查中线附近的对。</li>
+<li><strong>旋转卡壳</strong>：用于求凸包直径、最小矩形覆盖等。</li>
+</ul>
+<h3 id="1-向量与叉积"><a href="#1-向量与叉积" class="headerlink" title="1. 向量与叉积"></a>1. 向量与叉积</h3><ul>
+<li>点积：<code>a · b = x1*x2 + y1*y2</code>（判断垂直、夹角）</li>
+<li>叉积：<code>a × b = x1*y2 - y1*x2</code>（判断方向、平行四边形面积）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">cross</span>(<span class="params">o, a, b</span>):</span><br><span class="line">    <span class="keyword">return</span> (a[<span class="number">0</span>]-o[<span class="number">0</span>]) * (b[<span class="number">1</span>]-o[<span class="number">1</span>]) - (a[<span class="number">1</span>]-o[<span class="number">1</span>]) * (b[<span class="number">0</span>]-o[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+
+<h4 id="判断两条线段是否相交"><a href="#判断两条线段是否相交" class="headerlink" title="判断两条线段是否相交"></a>判断两条线段是否相交</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">on_segment</span>(<span class="params">p, q, r</span>):</span><br><span class="line">    <span class="comment"># 判断点 q 是否在线段 pr 上</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">min</span>(p[<span class="number">0</span>], r[<span class="number">0</span>]) &lt;= q[<span class="number">0</span>] &lt;= <span class="built_in">max</span>(p[<span class="number">0</span>], r[<span class="number">0</span>]) <span class="keyword">and</span> \</span><br><span class="line">           <span class="built_in">min</span>(p[<span class="number">1</span>], r[<span class="number">1</span>]) &lt;= q[<span class="number">1</span>] &lt;= <span class="built_in">max</span>(p[<span class="number">1</span>], r[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">segments_intersect</span>(<span class="params">p1, q1, p2, q2</span>):</span><br><span class="line">    <span class="comment"># 跨立实验</span></span><br><span class="line">    d1 = cross(p1, q1, p2)</span><br><span class="line">    d2 = cross(p1, q1, q2)</span><br><span class="line">    d3 = cross(p2, q2, p1)</span><br><span class="line">    d4 = cross(p2, q2, q1)</span><br><span class="line">    <span class="keyword">if</span> d1 * d2 &lt; <span class="number">0</span> <span class="keyword">and</span> d3 * d4 &lt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="comment"># 共线情况</span></span><br><span class="line">    <span class="keyword">if</span> d1 == <span class="number">0</span> <span class="keyword">and</span> on_segment(p1, p2, q1): <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">if</span> d2 == <span class="number">0</span> <span class="keyword">and</span> on_segment(p1, q2, q1): <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">if</span> d3 == <span class="number">0</span> <span class="keyword">and</span> on_segment(p2, p1, q2): <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">if</span> d4 == <span class="number">0</span> <span class="keyword">and</span> on_segment(p2, q1, q2): <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-凸包（Andrew-算法）"><a href="#2-凸包（Andrew-算法）" class="headerlink" title="2. 凸包（Andrew 算法）"></a>2. 凸包（Andrew 算法）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">convex_hull</span>(<span class="params">points</span>):</span><br><span class="line">    points = <span class="built_in">sorted</span>(<span class="built_in">set</span>(points))</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(points) &lt;= <span class="number">1</span>: <span class="keyword">return</span> points</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">build</span>(<span class="params">points</span>):</span><br><span class="line">        hull = []</span><br><span class="line">        <span class="keyword">for</span> p <span class="keyword">in</span> points:</span><br><span class="line">            <span class="keyword">while</span> <span class="built_in">len</span>(hull) &gt;= <span class="number">2</span> <span class="keyword">and</span> cross(hull[-<span class="number">2</span>], hull[-<span class="number">1</span>], p) &lt;= <span class="number">0</span>:</span><br><span class="line">                hull.pop()</span><br><span class="line">            hull.append(p)</span><br><span class="line">        <span class="keyword">return</span> hull</span><br><span class="line">    lower = build(points)</span><br><span class="line">    upper = build(<span class="built_in">reversed</span>(points))</span><br><span class="line">    <span class="keyword">return</span> lower[:-<span class="number">1</span>] + upper[:-<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="六、其他常用数学技巧"><a href="#六、其他常用数学技巧" class="headerlink" title="六、其他常用数学技巧"></a>六、其他常用数学技巧</h2><h3 id="1-前缀和与差分"><a href="#1-前缀和与差分" class="headerlink" title="1. 前缀和与差分"></a>1. 前缀和与差分</h3><p><strong>前缀和</strong>：快速求区间和，O(1) 查询。</p>
+<p><strong>二维前缀和</strong>：<br><code>pre[i][j] = pre[i-1][j] + pre[i][j-1] - pre[i-1][j-1] + a[i][j]</code><br>查询 <code>(x1,y1)</code> 到 <code>(x2,y2)</code> 的和：<br><code>sum = pre[x2][y2] - pre[x1-1][y2] - pre[x2][y1-1] + pre[x1-1][y1-1]</code></p>
+<p><strong>差分</strong>：对区间统一加减，O(1) 修改，最后做前缀和还原。</p>
+<h3 id="2-简单数论函数（在线性筛中同时求）"><a href="#2-简单数论函数（在线性筛中同时求）" class="headerlink" title="2. 简单数论函数（在线性筛中同时求）"></a>2. 简单数论函数（在线性筛中同时求）</h3><p>可以在线性筛时一并求出欧拉函数 φ、莫比乌斯函数 μ、约数个数等积性函数。</p>
+<h3 id="3-鸽巢原理与抽屉原理"><a href="#3-鸽巢原理与抽屉原理" class="headerlink" title="3. 鸽巢原理与抽屉原理"></a>3. 鸽巢原理与抽屉原理</h3><p>当 N 个物品放入 M 个容器且 N &gt; M 时，至少有一个容器有多个物品。常与循环、前缀和同余结合。</p>
+<h3 id="4-同余定理应用"><a href="#4-同余定理应用" class="headerlink" title="4. 同余定理应用"></a>4. 同余定理应用</h3><ul>
+<li><code>(a + b) mod m = ((a mod m) + (b mod m)) mod m</code></li>
+<li>同余关系在子数组和可被 K 整除等问题中非常关键。</li>
+<li>前缀和数组 <code>pre[i]</code>，若 <code>pre[i] % k == pre[j] % k</code>，则 <code>[i+1, j]</code> 的子数组和能被 k 整除。</li>
+</ul>
+<h3 id="5-离散化"><a href="#5-离散化" class="headerlink" title="5. 离散化"></a>5. 离散化</h3><p>将大范围&#x2F;浮点数映射到较小的整数索引，常用于 BIT&#x2F;线段树处理坐标问题。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sorted_unique = <span class="built_in">sorted</span>(<span class="built_in">set</span>(arr))</span><br><span class="line">rank = &#123;v:i <span class="keyword">for</span> i, v <span class="keyword">in</span> <span class="built_in">enumerate</span>(sorted_unique)&#125;</span><br><span class="line"><span class="comment"># 原值 -&gt; rank 进行后续处理</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://hideincode.github.io/2022/08/08/algo/%E6%95%B0%E5%AD%A6%E9%97%AE%E9%A2%98/" title="数学问题" target="_blank" rel="external">https://hideincode.github.io/2022/08/08/algo/数学问题/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/HideInCode" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/HideInCode" target="_blank"><span class="text-dark">HideInCode</span><small class="ml-1x">服务端工程师</small></a></h3>
+        <div>后端玩家</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2023/05/01/basic/%E5%B9%B6%E5%8F%91/" title="并发编程"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2022/08/08/algo/%E4%BB%A3%E7%A0%81%E6%A8%A1%E6%9D%BF/" title="代码模板"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/HideInCode" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	<!-- Theme by <a href="https://github.com/" target="_blank">  </a>base on <a href="https://github.com/" target="_blank">pure</a>. -->
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <script src="//cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'Ov23livjuFqQWx8aX0PX',
+    clientSecret: 'e5e9a0c7d063781f24450bf3b143293dc613001d',
+    repo: 'gitalk-comments',
+    owner: 'HideInCode',
+    admin: ['HideInCode'],
+    id: md5(location.pathname),
+    distractionFreeMode: true,
+    language: 'zh-CN',
+    enableHotKey: 'true'
+  })
+  gitalk.render('comments')
+  </script>
+      
+
+
+
+
+
+
+
+</body>
+</html>

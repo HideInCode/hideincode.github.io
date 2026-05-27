@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>LeetCode指南 | HideInCode</title>
+  <meta name="description" content="LeetCode 算法通关：学什么？ ：是啊，学什么？  一、数据结构基础数据结构是算法的基石。刷题时，根据题目给定的数据结构，往往能直接缩小可用的算法范围。 1. 数组与矩阵 核心操作：遍历、双指针、前缀和、差分数组、原地修改 前缀和：快速求任意子数组的和，常用于“子数组和为 K”类问题 差分数组：高效处理区间加法修改，最后前缀和还原 矩阵：常涉及螺旋遍历、旋转图像、搜索二维矩阵，核心是找坐标变">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode指南">
+<meta property="og:url" content="https://hideincode.github.io/2026/05/27/algo/LeetCode%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="LeetCode 算法通关：学什么？ ：是啊，学什么？  一、数据结构基础数据结构是算法的基石。刷题时，根据题目给定的数据结构，往往能直接缩小可用的算法范围。 1. 数组与矩阵 核心操作：遍历、双指针、前缀和、差分数组、原地修改 前缀和：快速求任意子数组的和，常用于“子数组和为 K”类问题 差分数组：高效处理区间加法修改，最后前缀和还原 矩阵：常涉及螺旋遍历、旋转图像、搜索二维矩阵，核心是找坐标变">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-05-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-05-27T06:13:46.297Z">
+<meta property="article:tag" content="algo">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://hideincode.github.io/2026/05/27/algo/LeetCode%E6%8C%87%E5%8D%97/index.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.css">
+  
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/HideInCode" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">HideInCode</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">服务端工程师</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 深圳</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/HideInCode" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>个人知识归纳，转载注明出处。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%BA%90%E7%A0%81/">源码</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/">环境部署</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">系统设计</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/">问题排查</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/" rel="tag">AI</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/" rel="tag">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LangChain/" rel="tag">LangChain</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS/" rel="tag">OS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RAG/" rel="tag">RAG</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-AI/" rel="tag">Spring AI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algo/" rel="tag">algo</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code/" rel="tag">code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/concurrent/" rel="tag">concurrent</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/devops/" rel="tag">devops</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/error/" rel="tag">error</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/system-design/" rel="tag">system design</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/threads/" rel="tag">threads</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1/" rel="tag">代码设计</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/" rel="tag">加密算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%91%E9%87%8F%E6%A3%80%E7%B4%A2/" rel="tag">向量检索</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/" rel="tag">知识库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="tag">网络安全</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/AI/" style="font-size: 13.33px;">AI</a> <a href="/tags/Elasticsearch/" style="font-size: 13px;">Elasticsearch</a> <a href="/tags/JVM/" style="font-size: 13px;">JVM</a> <a href="/tags/LangChain/" style="font-size: 13px;">LangChain</a> <a href="/tags/OS/" style="font-size: 13px;">OS</a> <a href="/tags/RAG/" style="font-size: 13px;">RAG</a> <a href="/tags/Spring-AI/" style="font-size: 13px;">Spring AI</a> <a href="/tags/algo/" style="font-size: 13.67px;">algo</a> <a href="/tags/code/" style="font-size: 13.33px;">code</a> <a href="/tags/concurrent/" style="font-size: 13px;">concurrent</a> <a href="/tags/devops/" style="font-size: 14px;">devops</a> <a href="/tags/error/" style="font-size: 13.33px;">error</a> <a href="/tags/system-design/" style="font-size: 14px;">system design</a> <a href="/tags/threads/" style="font-size: 13px;">threads</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1/" style="font-size: 13px;">代码设计</a> <a href="/tags/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/" style="font-size: 13px;">加密算法</a> <a href="/tags/%E5%90%91%E9%87%8F%E6%A3%80%E7%B4%A2/" style="font-size: 13px;">向量检索</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/" style="font-size: 13px;">知识库</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13px;">网络</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" style="font-size: 13px;">网络安全</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/05/">五月 2026</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/02/">二月 2026</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/10/">十月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">八月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/06/">六月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">三月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+              </p>
+              <p class="item-title">
+                <a href="/2026/05/27/algo/LeetCode%E6%8C%87%E5%8D%97/" class="title">LeetCode指南</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2026-05-26T16:00:00.000Z" itemprop="datePublished">2026-05-27</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+              </p>
+              <p class="item-title">
+                <a href="/2026/05/01/algo/%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A7/" class="title">解题技巧</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2026-04-30T16:00:00.000Z" itemprop="datePublished">2026-05-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+              </p>
+              <p class="item-title">
+                <a href="/2026/05/01/algo/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" class="title">背包问题</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2026-04-30T16:00:00.000Z" itemprop="datePublished">2026-05-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">系统设计</a>
+              </p>
+              <p class="item-title">
+                <a href="/2026/02/28/system/RAG%E5%AE%9E%E6%88%98/" class="title">RAG 实战：LangChain / Spring AI + Elasticsearch 构建私有知识库问答系统</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2026-02-27T16:00:00.000Z" itemprop="datePublished">2026-02-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a>
+              </p>
+              <p class="item-title">
+                <a href="/2025/10/27/basic/numpy/" class="title">NumPy 快速入门与核心知识总结</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2025-10-27T14:00:00.000Z" itemprop="datePublished">2025-10-27</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-algo/LeetCode指南" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      LeetCode指南
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2026/05/27/algo/LeetCode%E6%8C%87%E5%8D%97/" class="article-date">
+	  <time datetime="2026-05-26T16:00:00.000Z" itemprop="datePublished">2026-05-27</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/algo/" rel="tag">algo</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2026/05/27/algo/LeetCode%E6%8C%87%E5%8D%97/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="LeetCode-算法通关"><a href="#LeetCode-算法通关" class="headerlink" title="LeetCode 算法通关"></a>LeetCode 算法通关</h1><p>：学什么？</p>
+<p>：是啊，学什么？</p>
+<hr>
+<h2 id="一、数据结构基础"><a href="#一、数据结构基础" class="headerlink" title="一、数据结构基础"></a>一、数据结构基础</h2><p>数据结构是算法的基石。刷题时，根据题目给定的数据结构，往往能直接缩小可用的算法范围。</p>
+<h3 id="1-数组与矩阵"><a href="#1-数组与矩阵" class="headerlink" title="1. 数组与矩阵"></a>1. 数组与矩阵</h3><ul>
+<li><strong>核心操作</strong>：遍历、双指针、前缀和、差分数组、原地修改</li>
+<li><strong>前缀和</strong>：快速求任意子数组的和，常用于“子数组和为 K”类问题</li>
+<li><strong>差分数组</strong>：高效处理区间加法修改，最后前缀和还原</li>
+<li><strong>矩阵</strong>：常涉及螺旋遍历、旋转图像、搜索二维矩阵，核心是找坐标变换规律</li>
+<li><strong>高频题型</strong>：螺旋矩阵、杨辉三角、区间合并（LC 56）、缺失数字（LC 268）、消失的数字（LC 448）</li>
+<li><strong>必刷题</strong>：两数之和（1）、三数之和（15）、盛最多水的容器（11）、接雨水（42）</li>
+</ul>
+<h3 id="2-链表"><a href="#2-链表" class="headerlink" title="2. 链表"></a>2. 链表</h3><ul>
+<li><strong>核心操作</strong>：虚拟头节点简化边界、快慢指针、多指针反转</li>
+<li><strong>高频题型</strong>：反转链表（整体&#x2F;区间）、环形链表检测与找入口、删除倒数第 N 个节点、合并 K 个有序链表、LRU 缓存</li>
+<li><strong>关键技巧</strong>：在链表头部加 dummy 节点，避免处理头节点为空的特殊情况</li>
+<li><strong>高频题型</strong>：反转链表（LC 206）、K个一组翻转（LC 25）、环形链表I&#x2F;II（LC 141&#x2F;142）、合并K个升序链表（LC 23）、LRU缓存（LC 146）</li>
+<li><strong>必刷题</strong>：合并两个有序链表（21）、删除链表倒数第N个节点（19）、回文链表（234）</li>
+</ul>
+<h3 id="3-哈希表-Map-Set"><a href="#3-哈希表-Map-Set" class="headerlink" title="3. 哈希表 &#x2F; Map &#x2F; Set"></a>3. 哈希表 &#x2F; Map &#x2F; Set</h3><ul>
+<li><strong>核心操作</strong>：O(1) 查找、去重、计数</li>
+<li><strong>典型应用</strong>：两数之和、字母异位词分组、最长连续序列、前缀和 + 哈希统计</li>
+<li><strong>本质</strong>：构建值到索引&#x2F;频率的映射，用空间换取时间</li>
+<li><strong>高频题型</strong>：两数之和（LC 1）、字母异位词分组（LC 49）、前K个高频元素（LC 347）</li>
+<li><strong>必刷题</strong>：最长连续序列（128）、复制带随机指针的链表（138）</li>
+</ul>
+<h3 id="4-栈与队列"><a href="#4-栈与队列" class="headerlink" title="4. 栈与队列"></a>4. 栈与队列</h3><ul>
+<li><strong>栈（LIFO）</strong>：括号匹配、表达式求值、辅助栈实现最小栈</li>
+<li><strong>单调栈</strong>：专门解决“下一个更大元素”类问题，能快速找到左右边界（如接雨水、柱状图中最大的矩形）</li>
+<li><strong>队列（FIFO）</strong>：BFS 的标配</li>
+<li><strong>双端队列</strong>：滑动窗口最大值（维护单调递减队列）</li>
+<li><strong>高频题型</strong>：有效的括号（LC 20）、最小栈（LC 155）、每日温度（LC 739）、滑动窗口最大值（LC 239）</li>
+<li><strong>必刷题</strong>：逆波兰表达式求值（150）、字符串解码（394）</li>
+</ul>
+<h3 id="5-树与二叉树"><a href="#5-树与二叉树" class="headerlink" title="5. 树与二叉树"></a>5. 树与二叉树</h3><ul>
+<li><strong>遍历</strong>：DFS（前&#x2F;中&#x2F;后序，递归与迭代）、BFS（层序遍历）</li>
+<li><strong>经典问题</strong>：最大深度、验证 BST、对称二叉树、最近公共祖先（LCA）、路径总和、构造二叉树</li>
+<li><strong>常用技巧</strong>：自顶向下传参 vs 自底向上返回；后序遍历在子树间收集信息（如直径、LCA）</li>
+<li><strong>高频题型</strong>：最大深度（LC 104）、验证二叉搜索树（LC 98）、对称二叉树（LC 101）、最近公共祖先（LC 236）、路径总和（LC 112）</li>
+<li><strong>必刷题</strong>：翻转二叉树（226）、从前序与中序遍历序列构造二叉树（105）、二叉树展开为链表（114）</li>
+</ul>
+<h3 id="6-堆-优先队列"><a href="#6-堆-优先队列" class="headerlink" title="6. 堆 &#x2F; 优先队列"></a>6. 堆 &#x2F; 优先队列</h3><ul>
+<li><strong>核心功能</strong>：动态维护集合中的最值</li>
+<li><strong>典型应用</strong>：Top K 问题（用大小为 K 的小顶堆）、数据流中位数（双堆法）、合并 K 个有序链表</li>
+<li><strong>高频题型</strong>：数据流的中位数（LC 295）、合并K个升序链表（LC 23）、前K个高频元素（LC 347）</li>
+</ul>
+<h3 id="7-图"><a href="#7-图" class="headerlink" title="7. 图"></a>7. 图</h3><ul>
+<li><strong>存储方式</strong>：邻接表（最常用）、邻接矩阵</li>
+<li><strong>基础遍历</strong>：DFS（递归&#x2F;栈）、BFS（队列）</li>
+<li><strong>关键算法</strong>：<ul>
+<li>连通块 &#x2F; 岛屿问题：DFS &#x2F; BFS &#x2F; 并查集</li>
+<li>最短路径：无权图用 BFS，带正权图用 Dijkstra</li>
+<li>拓扑排序：Kahn 算法（BFS）或 DFS 逆后序</li>
+<li>动态连通性：并查集（路径压缩 + 按秩合并）</li>
+<li>最小生成树：Kruskal（并查集 + 边排序）、Prim</li>
+</ul>
+</li>
+<li><strong>高频题型</strong>：岛屿数量（LC 200）、克隆图（LC 133）、课程表（拓扑排序，LC 207）、最短路径（BFS&#x2F;迪杰斯特拉）、最小生成树、网络流</li>
+<li><strong>必刷题</strong>：单词接龙（127）、被围绕的区域（130）、冗余连接（684）</li>
+</ul>
+<h3 id="8-高级数据结构"><a href="#8-高级数据结构" class="headerlink" title="8. 高级数据结构"></a>8. 高级数据结构</h3><ul>
+<li><strong>字典树（Trie）</strong>：用于字符串前缀匹配、单词搜索</li>
+<li><strong>并查集</strong>：处理连通性问题，近乎 O(1) 的合并与查询</li>
+<li><strong>线段树 &#x2F; 树状数组</strong>：高效处理区间查询与修改（单点&#x2F;区间）</li>
+<li><strong>LRU&#x2F;LFU 缓存</strong>：哈希表 + 双向链表</li>
+</ul>
+<h2 id="二、算法思想"><a href="#二、算法思想" class="headerlink" title="二、算法思想"></a>二、算法思想</h2><p>掌握以下七种算法思想，就能应对 LeetCode 中 90% 的问题。</p>
+<h3 id="1-双指针与滑动窗口"><a href="#1-双指针与滑动窗口" class="headerlink" title="1. 双指针与滑动窗口"></a>1. 双指针与滑动窗口</h3><ul>
+<li><strong>思路</strong>：利用数组&#x2F;链表的有序性或索引差来减少遍历层次</li>
+<li><strong>题型细分</strong>：<ul>
+<li>左右指针（对撞指针）：处理有序数组求和&#x2F;回文判定</li>
+<li>快慢指针：链表环检测（Floyd判圈算法）</li>
+<li>滑动窗口：处理子串&#x2F;子数组的连续问题（定长&#x2F;不定长&#x2F;单序列&#x2F;双序列&#x2F;三指针）</li>
+</ul>
+</li>
+<li><strong>必刷题</strong>：两数之和II（167）、验证回文串（125）、删除有序数组中的重复项（26）</li>
+</ul>
+<h3 id="2-二分查找"><a href="#2-二分查找" class="headerlink" title="2. 二分查找"></a>2. 二分查找</h3><ul>
+<li><strong>基础二分</strong>：在有序数组中查找目标值或边界</li>
+<li><strong>二分答案</strong>：当问题可以转化为“是否存在一个 x 满足条件”，且答案是单调的，就对答案值域二分。常见于“最大化最小值”或“最小化最大值”类题目</li>
+<li><strong>旋转数组二分</strong>：利用局部有序性进行剪枝</li>
+<li><strong>必刷题</strong>：搜索旋转排序数组（33）、在排序数组中查找元素的第一个和最后一个位置（34）、寻找峰值（162）、爱吃香蕉的珂珂（875）</li>
+</ul>
+<h3 id="3-动态规划（DP）"><a href="#3-动态规划（DP）" class="headerlink" title="3. 动态规划（DP）"></a>3. 动态规划（DP）</h3><ul>
+<li><strong>解题步骤</strong>：定义 dp 含义 → 写出转移方程 → 初始化 → 确定遍历顺序 → 举例验证</li>
+<li><strong>常见 DP 类型</strong>：<ul>
+<li>线性 DP：爬楼梯、打家劫舍、最长递增子序列</li>
+<li>背包 DP：0-1背包、全背包、多重背包、分组背包</li>
+<li>区间 DP：最长回文子序列、戳气球</li>
+<li>状态机 DP：买卖股票系列（持有&#x2F;非持有状态转移）</li>
+<li>划分DP（分割等和子集）</li>
+<li>状压DP &#x2F; 数位DP &#x2F; 树形DP（二叉树路径和）</li>
+<li>二维 DP：最长公共子序列、编辑距离</li>
+<li>计数 DP：求方案总数（通常把 max 换成求和，dp[0] 初始化为 1）</li>
+<li>博弈DP &#x2F; 概率期望DP</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-DFS-BFS-与回溯"><a href="#4-DFS-BFS-与回溯" class="headerlink" title="4. DFS &#x2F; BFS 与回溯"></a>4. DFS &#x2F; BFS 与回溯</h3><ul>
+<li><strong>DFS</strong>：深入到底再返回，适合连通块、树的后序遍历、拓扑排序</li>
+<li><strong>BFS</strong>：层层扩散，适合最短路径、最小步数问题</li>
+<li><strong>回溯</strong>：试探 + 撤销，用于生成所有排列、组合、子集、N 皇后等“列出所有可能”的题目</li>
+<li><strong>剪枝</strong>：在回溯中提前停止不可能的分支，是提速的关键</li>
+</ul>
+<h3 id="5-贪心算法"><a href="#5-贪心算法" class="headerlink" title="5. 贪心算法"></a>5. 贪心算法</h3><ul>
+<li><strong>适用条件</strong>：局部最优能推导出全局最优，往往需要排序预处理</li>
+<li><strong>典型场景</strong>：区间调度（按结束时间排序）、跳跃游戏（维护最远可达位置）、任务分配</li>
+<li><strong>注意</strong>：贪心不一定正确，若无法证明，应尝试 DP</li>
+</ul>
+<h3 id="6-分治算法"><a href="#6-分治算法" class="headerlink" title="6. 分治算法"></a>6. 分治算法</h3><ul>
+<li><strong>思想</strong>：分解成独立子问题，分别解决后合并</li>
+<li><strong>典型</strong>：归并排序（同时可解决逆序对问题）、快速排序、平面最近点对</li>
+</ul>
+<h3 id="7-位运算"><a href="#7-位运算" class="headerlink" title="7. 位运算"></a>7. 位运算</h3><ul>
+<li><strong>位运算</strong>：异或找唯一数字、<code>n &amp; (n-1)</code> 消去最后一位 1、lowbit 运算</li>
+<li><strong>快速幂</strong>：O(log n) 计算幂</li>
+<li><strong>应用场景</strong>：状态压缩、快速幂、找出唯一出现的数字、基础运算（性质&#x2F;拆位&#x2F;试填&#x2F;恒等式&#x2F;思维）</li>
+<li><strong>必刷题</strong>：只出现一次的数字（136）、汉明距离（461）、比特位计数（338）</li>
+</ul>
+<h2 id="8-数学"><a href="#8-数学" class="headerlink" title="8. 数学"></a>8. 数学</h2><ul>
+<li><strong>素数筛</strong>：埃氏筛 O(n log log n)、线性筛 O(n)</li>
+<li><strong>组合数学</strong>：卡特兰数、容斥原理、排列组合公式（阶乘 + 逆元）</li>
+<li><strong>高频考点</strong>：最大公约数&#x2F;最小公倍数、快速幂、素数筛法（埃氏筛&#x2F;线性筛）、进制转换、大数运算</li>
+<li><strong>扩展考点</strong>：数论（模运算、同余）、组合数学（排列组合、卡特兰数）、计算几何、随机算法、概率期望、博弈论</li>
+</ul>
+<h3 id="三、题型技巧篇"><a href="#三、题型技巧篇" class="headerlink" title="三、题型技巧篇"></a>三、题型技巧篇</h3><h4 id="1-搜索算法"><a href="#1-搜索算法" class="headerlink" title="1. 搜索算法"></a>1. 搜索算法</h4><ul>
+<li><strong>BFS（广度优先搜索）</strong>：逐层遍历，利用队列实现；适合找最短路径&#x2F;最短步数</li>
+<li><strong>DFS（深度优先搜索）</strong>：一路走到底，利用递归&#x2F;栈实现；适合回溯&#x2F;拓扑排序&#x2F;连通性问题</li>
+<li><strong>高频题型</strong>：网格图（DFS&#x2F;BFS&#x2F;综合应用）</li>
+</ul>
+<h4 id="2-字符串算法"><a href="#2-字符串算法" class="headerlink" title="2. 字符串算法"></a>2. 字符串算法</h4><ul>
+<li><strong>核心方法</strong>：双指针、哈希表统计</li>
+<li><strong>高级算法</strong>：KMP（字符串匹配）、Z函数、Manacher（最长回文子串）、字符串哈希、AC自动机、后缀数组、子序列自动机</li>
+<li><strong>必刷题</strong>：实现 strStr()（28）、最长回文子串（5）、最小覆盖子串（76）</li>
+</ul>
+<h4 id="3-数学与数论"><a href="#3-数学与数论" class="headerlink" title="3. 数学与数论"></a>3. 数学与数论</h4><ul>
+<li><strong>高频考点</strong>：最大公约数&#x2F;最小公倍数、快速幂、素数筛法（埃氏筛&#x2F;线性筛）、进制转换、大数运算</li>
+<li><strong>扩展考点</strong>：数论（模运算、同余）、组合数学（排列组合、卡特兰数）、计算几何、随机算法、概率期望、博弈论</li>
+<li><strong>必刷题</strong>：两数相除（29）、Pow(x, n)（50）、阶乘后的零（172）、快乐数（202）</li>
+</ul>
+<h3 id="四、组合题型分类"><a href="#四、组合题型分类" class="headerlink" title="四、组合题型分类"></a>四、组合题型分类</h3><p>有些题目会综合多种数据结构和算法，需要灵活运用：</p>
+<h4 id="1-前缀和与差分"><a href="#1-前缀和与差分" class="headerlink" title="1. 前缀和与差分"></a>1. 前缀和与差分</h4><ul>
+<li><strong>思路</strong>：前缀和快速计算区间和，差分数组高效处理区间修改</li>
+<li><strong>应用场景</strong>：和为K的子数组、连续数组的最大和</li>
+</ul>
+<h4 id="2-单调栈"><a href="#2-单调栈" class="headerlink" title="2. 单调栈"></a>2. 单调栈</h4><ul>
+<li><strong>思路</strong>：维护栈内元素单调递增或递减</li>
+<li><strong>应用场景</strong>：基础单调栈、矩形面积问题（贡献法）、最小字典序问题</li>
+<li><strong>必刷题</strong>：柱状图中最大的矩形（84）、接雨水（42）、每日温度（739）</li>
+</ul>
+<h4 id="3-双堆技巧"><a href="#3-双堆技巧" class="headerlink" title="3. 双堆技巧"></a>3. 双堆技巧</h4><ul>
+<li><strong>思路</strong>：使用两个堆（一个大顶堆一个小顶堆）分别维护数据流的两半</li>
+<li><strong>应用场景</strong>：动态维护中位数、滑动窗口中位数</li>
+<li><strong>必刷题</strong>：数据流的中位数（295）、滑动窗口中位数（480）</li>
+</ul>
+<h4 id="4-循环排序-Cyclic-Sort"><a href="#4-循环排序-Cyclic-Sort" class="headerlink" title="4. 循环排序 (Cyclic Sort)"></a>4. 循环排序 (Cyclic Sort)</h4><ul>
+<li><strong>思路</strong>：将每个元素放到它应该在的位置上（通常适用于范围在 0 到 n-1 的数组）</li>
+<li><strong>应用场景</strong>：寻找缺失&#x2F;重复的数字</li>
+<li><strong>必刷题</strong>：缺失数字（268）、找到所有数组中消失的数字（448）</li>
+</ul>
+<h4 id="5-原地链表反转-In-place-Reversal-of-Linked-List"><a href="#5-原地链表反转-In-place-Reversal-of-Linked-List" class="headerlink" title="5. 原地链表反转 (In-place Reversal of Linked List)"></a>5. 原地链表反转 (In-place Reversal of Linked List)</h4><ul>
+<li><strong>思路</strong>：直接在原链表上操作，改变节点的 next 指针方向</li>
+<li><strong>应用场景</strong>：反转整个链表、反转部分链表</li>
+<li><strong>必刷题</strong>：反转链表（206）、反转链表II（92）、K 个一组翻转链表（25）</li>
+</ul>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://hideincode.github.io/2026/05/27/algo/LeetCode%E6%8C%87%E5%8D%97/" title="LeetCode指南" target="_blank" rel="external">https://hideincode.github.io/2026/05/27/algo/LeetCode指南/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/HideInCode" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/HideInCode" target="_blank"><span class="text-dark">HideInCode</span><small class="ml-1x">服务端工程师</small></a></h3>
+        <div>后端玩家</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2026/05/01/algo/%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A7/" title="解题技巧"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/HideInCode" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	<!-- Theme by <a href="https://github.com/" target="_blank">  </a>base on <a href="https://github.com/" target="_blank">pure</a>. -->
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <script src="//cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'Ov23livjuFqQWx8aX0PX',
+    clientSecret: 'e5e9a0c7d063781f24450bf3b143293dc613001d',
+    repo: 'gitalk-comments',
+    owner: 'HideInCode',
+    admin: ['HideInCode'],
+    id: md5(location.pathname),
+    distractionFreeMode: true,
+    language: 'zh-CN',
+    enableHotKey: 'true'
+  })
+  gitalk.render('comments')
+  </script>
+      
+
+
+
+
+
+
+
+</body>
+</html>
